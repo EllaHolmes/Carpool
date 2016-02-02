@@ -21,6 +21,8 @@ class NewVisitorTest(unittest.TestCase):
     def navigate_to_find_a_ride_page (self):
         #TODO loads find a ride page
 
+    #TODO check that user is logged in
+    
     def test_user_can_search_for_ride (self):
         #User opens up our website
         self.browser.get('http://localhost:8000')
