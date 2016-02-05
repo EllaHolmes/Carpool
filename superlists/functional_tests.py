@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 import unittest
 import carpool.views
 
@@ -13,8 +14,18 @@ class NewDriverVisitorTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def enter_new_carpool_driver(self):
-        pass
+    def enter_new_carpool_driver(self, firstName, lastName, startLocation, endLocation):
+        inputFirstName = self.browser.find_element_by_id('id_first_name')
+        inputLastName = self.browser.find_element_by_id('id_last_name')
+        inputStart = self.browser.find_element_by_id('id_start')
+        inputEnd = self.browser.find_element_by_id('id_end')
+        inputFirstName.send_keys(firstName);
+        inputLastName.send_keys(lastName);
+        inputStart.send_keys(startLocation);
+        inputEnd.send_keys(endLocation);
+        # enterButton = self.browser.find_element_by_id('id_new_driver_btn')
+        # enterButton.send_key(Keys.ENTER)
+
 
     def test_user_can_enter_in_travel_plans(self):
         #User opens up our website
@@ -25,7 +36,7 @@ class NewDriverVisitorTest(unittest.TestCase):
         header_text = self.browser.find_element_by_tag_name('h1').text
         self.assertIn('Carpool', header_text)
 
-        #She is invited to enter in her name, start location, end location, and date
+        #She is invited to enter in her name, start location, end location
         inputFirstName = self.browser.find_element_by_id('id_first_name')
         self.assertEqual(
             inputFirstName.get_attribute('placeholder'),
@@ -50,36 +61,14 @@ class NewDriverVisitorTest(unittest.TestCase):
             'End Location'
         )
 
-        inputDate = self.browser.find_element_by_id('id_date')
-        self.assertEqual(
-            inputDate.get_attribute('placeholder'),
-            'Travel Date'
-        )
-
         #She enters in her information and presses enter
-        self.enter_new_carpool_driver('Mary', 'Lyon', 'South Hadley, MA', 'Amherst, MA', '1,1,2017')
+        self.enter_new_carpool_driver('Mary', 'Lyon', 'South Hadley, MA', 'Amherst, MA')
 
         # #she is then redirected to a map that shows a list of people looking for a ride
         # map_url = self.browser.current_url
         # self.assertRegexMatches(map_url, '/map/.+')
 
         self.fail('Finish thet test!')
-
-    def test_enter_new_carpool_driver(self, name, start, end, date):
-        pass
-
-    def test_routes_are_found(self, startId, endId, date):
-        #TODO implement a way to check the route
-        return True
-
-    def test_navigate_to_find_a_ride_page (self):
-        #TODO loads find a ride page
-        carpool.views.find_ride_page()
-        pass
-
-    def test_user_is_logged_in (self):
-        #TODO check that user is logged in
-        return True;
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
