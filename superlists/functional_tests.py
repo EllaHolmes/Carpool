@@ -23,7 +23,7 @@ class NewVisitorTest(unittest.TestCase):
         self.assertIn('Carpool', header_text)
 
         #She is invited to enter in her name, start location, end location, and date
-        inputName = self.browser.find_element_by_id('id_user')
+        inputName = self.browser.find_element_by_id('id_name')
         self.assertEqual(
             inputname.get_attribute('placeholder'),
             'Enter First and Last name'
