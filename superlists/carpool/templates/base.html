@@ -13,10 +13,13 @@
   <body>
     <!-- All of your HTML will go between here.... -->
     <h1>Carpool: Find a Ride</h1>
-    <input id="id_first_name" placeholder="First Name"/>
-    <input id="id_last_name" placeholder="Last Name"/>
-    <input id="id_start" placeholder="Start Location"/>
-    <input id="id_end" placeholder="End Location"/>
+    <form method="POST">
+      <input name = "first_name_text" id="id_first_name" placeholder="First Name"/>
+      <input id="id_last_name" placeholder="Last Name"/>
+      <input id="id_start" placeholder="Start Location"/>
+      <input id="id_end" placeholder="End Location"/>
+      {% csrf_token %}
+    </form>
     <button id="id_new_driver_btn"
             type="submit"
             class="btn"

@@ -2,7 +2,7 @@ from django.core.urlresolvers import resolve
 from django.template.loader import render_to_string
 from django.test import TestCase
 from django.http import HttpRequest
-from carpool.views import home_page
+from carpool.views import home_page, user_page
 
 # Create your tests here.
 class HomePageTest(TestCase):
@@ -16,3 +16,12 @@ class HomePageTest(TestCase):
         response = home_page(request)
         expected_html = render_to_string('base.html')
         self.assertEqual(response.content.decode(), expected_html)
+
+    def test_home_page_saves_name_and_posts_to_new_page(self):
+        request = HttpRequest()
+        request.method = 'POST'
+        request.POST['first_name_text'] = 'new user name'
+
+        response = user_page(request)
+
+        self.assertEqual('new user name', response.content.decode())
