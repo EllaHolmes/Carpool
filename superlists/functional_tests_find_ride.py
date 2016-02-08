@@ -18,7 +18,10 @@ class NewRiderVisitorTest(unittest.TestCase):
 
     def navigate_to_new_user_choice_page (self):
        #TODO: find a way to navigate to that page
-       #carpool.views.new_user_choice()
+       # request = HttpRequest()
+       # request.method = 'GET'
+
+       # response = carpool.views.new_user_choice(request)
        pass
     
     def test_user_can_make_an_account (self):
