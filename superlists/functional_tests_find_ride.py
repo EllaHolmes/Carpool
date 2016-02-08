@@ -16,20 +16,45 @@ class NewRiderVisitorTest(unittest.TestCase):
     def enter_new_carpool_driver(self, name, start, end, date):
         pass
 
+    def navigate_to_new_user_choice_page (self):
+       #TODO: find a way to navigate to that page
+       #carpool.views.new_user_choice()
+       pass
+    
+    def test_user_can_make_an_account (self):
+        #user loads the website
+        self.browser.get('http://localhost:8000')
+
+        #user is presented with a choice: "Driver" or "Rider"?
+
+
+class RiderRevisitsTest(unittest.TestCase):
+
+    def user_is_logged_in (self):
+        #TODO check that user is logged in
+        return True;
+
+
     def routes_are_found(self, startId, endId, date):
         #TODO implement a way to check the route
         return True
 
     def navigate_to_find_a_ride_page (self):
         #TODO loads find a ride page
-        carpool.views.find_ride_page()
+        #carpool.views.find_ride_page()
         pass
 
-    def user_is_logged_in (self):
-        #TODO check that user is logged in
-        return True;
+    def user_login (self, username, password):
+        #TODO: Authenticate username and password
+        pass
 
-class RiderRevisitsTest(unittest.TestCase):
+    def setUp(self):
+        self.browser = webdriver.Firefox()
+        self.browser.implicitly_wait(3)
+
+    def tearDown(self):
+        self.browser.quit()
+
     def test_user_can_search_for_ride (self):
         #User opens up our website
         self.browser.get('http://localhost:8000')
@@ -46,7 +71,7 @@ class RiderRevisitsTest(unittest.TestCase):
 
         #she is then redirected to a map that shows a list of people looking for a ride
         map_url = self.browser.current_url
-        self.assertRegexMatches(map_url, '/map/.+')
+        #self.assertRegexMatches(map_url, '/map/.+')
 
         self.fail('Finish that test!')
 
