@@ -18,7 +18,5 @@ from carpool import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name = 'home')
-    url(r'^$', views.find_ride_page, name = 'find')
-    url(r'^$', views.new_user_chioce, name = 'choice')
     #url(r'^admin/', include(admin.site.urls)),
 ]
