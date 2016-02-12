@@ -12,15 +12,9 @@
   </head>
   <body>
     <!-- All of your HTML will go between here.... -->
-    <h1>Carpool: Find a Ride</h1>
-    <form method = "POST">
-		<input name = "fname" id="id_first_name" placeholder="First Name"/>
-		<input name = "lname" id="l" placeholder="Last Name"/>
-		<input name = "start" id="id_start" placeholder="Start Location"/>
-		<input name = "end" id="id_end" placeholder="End Location"/>
-		<input name = "date" id="id_date" placeholder="Travel Date"/>
-		{% csrf_token %}
-	</form>
+ 
+		<h1 id="title_with_name"> {{user.name}}</h1>
+	
 
     <!-- ...and here. -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

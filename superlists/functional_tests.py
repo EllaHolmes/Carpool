@@ -2,8 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import carpool.views
-from carpool.models import User
 from django.conf import settings
+from carpool.models import User
+
 
 
 class NewDriverVisitorTest(unittest.TestCase):

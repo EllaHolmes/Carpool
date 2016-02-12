@@ -4,7 +4,12 @@ from django.db import models
 
 
 class User(models.Model):
-	name = models.TextField(default = '')
+	nameFirst = models.TextField(default = '')
+	nameLast = models.TextField(default = '')
+	start = models.TextField(default = '')
+	end = models.TextField(default = '')
+	date = models.TextField(default = '')
+	
 #	first_name = models.CharField(max_length=30)
 #	last_name = models.CharField(max_length=30)
 #	start_loc = models.CharField(max_length=500)
