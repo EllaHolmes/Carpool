@@ -12,15 +12,17 @@
   </head>
   <body>
     <!-- All of your HTML will go between here.... -->
-    <h1>Carpool: Find a Ride</h1>
+    <h1>Carpool: Post a Ride</h1>
     <input id="id_first_name" placeholder="First Name"/>
     <input id="id_last_name" placeholder="Last Name"/>
     <input id="id_start" placeholder="Start Location"/>
     <input id="id_end" placeholder="End Location"/>
-    <button id="id_new_driver_btn"
-            type="submit"
-            class="btn"
-            >New Driver</button>
+    <a href="{% url 'driver' %}">
+        <button id="id_new_driver_btn"
+                type="submit"
+                class="btn"
+                >New Driver</button>
+    </a>
 
     <!-- ...and here. -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

@@ -10,3 +10,6 @@ def find_ride_page(request):
 
 def new_user_choice(request):
 	return render(request, 'choice/index.html')
+
+def driver_home_page(request):
+	return render(request, 'driver/index.html')
