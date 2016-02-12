@@ -15,9 +15,25 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from carpool import views
+# from carpool.views import new_user_choice
+# from carpool.views import driver_home_page
+# from carpool.views import current_datetime
+# from carpool.views import process_driver
+# from carpool.views import test_form
+# from carpool.views import get_name
 
 urlpatterns = [
     url(r'^$', views.home_page, name = 'home'),
+# <<<<<<< HEAD
     url(r'^user/$', views.user_page, name = 'user_page'),
-    #url(r'^admin/', include(admin.site.urls)),
+# =======
+# >>>>>>> 5e286c94ec196acc43469d6451f4dc0f6e3608dd
+#     #url(r'^admin/', include(admin.site.urls)),
+#     url(r'^new/$', new_user_choice, name = "new"),
+#     url(r'^driver/$', driver_home_page, name ="driver"),
+#     url(r'^process/$', process_driver, name ="process_driver"),
+#     url(r'^test/$', current_datetime, name = "test"),
+#     url(r'^form/$', test_form, name = "test_form"),
+#     url(r'^your-name/$', get_name, name = "your_name"),
+#     url(r'^thanks/$', get_name, name = "your_name")
 ]
