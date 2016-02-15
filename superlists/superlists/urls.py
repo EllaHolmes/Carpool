@@ -24,16 +24,5 @@ from carpool import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name = 'home'),
-# <<<<<<< HEAD
-    url(r'^user/$', views.user_page, name = 'user_page'),
-# =======
-# >>>>>>> 5e286c94ec196acc43469d6451f4dc0f6e3608dd
-#     #url(r'^admin/', include(admin.site.urls)),
-#     url(r'^new/$', new_user_choice, name = "new"),
-#     url(r'^driver/$', driver_home_page, name ="driver"),
-#     url(r'^process/$', process_driver, name ="process_driver"),
-#     url(r'^test/$', current_datetime, name = "test"),
-#     url(r'^form/$', test_form, name = "test_form"),
-#     url(r'^your-name/$', get_name, name = "your_name"),
-#     url(r'^thanks/$', get_name, name = "your_name")
+    url(r'^welcome/$', views.new_user_page, name = 'welcome'),
 ]

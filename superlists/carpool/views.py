@@ -1,92 +1,25 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .forms import DriverForm
-from django.http import HttpResponseRedirect
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.shortcuts import render_to_response
-from django.template import RequestContext
-from django.core.context_processors import csrf
-from django.views.decorators.csrf import csrf_protect
-from django.template.loader import get_template
-from django.template import Context
-import datetime
-from .forms import NameForm
-from .forms import PostForm
+from carpool.models import User
 
 # Create your views here.
 def home_page(request):
-    # if request.method == "POST":
-    #     print ("in home_page")
-    #     return redirect('/user/')
-        # return HttpResponse(request.POST['first_name_text'])
     return render(request, 'base.html')
 
-def user_page(request):
-    print ("in user_page")
-
-# <<<<<<< HEAD
-    #return render(request, 'index.html')
-    return HttpResponse(request.POST['first_name_text'])
-# =======
-# def new_user_choice(request):
-# 	return render(request, 'choice/index.html')
-#
-# def current_datetime(request):
-#     now = datetime.datetime.now()
-#     html = "<html><body>It is now %s.</body></html>" % now
-#     return HttpResponse(html)
-#
-# def driver_home_page(request):
-# 	print("this is kind of working")
-# 	return render (request, 'driver/index.html')
-#
-# def test_form(request):
-# 	return render(request, 'form.html')
-#
-# #From https://docs.djangoproject.com/en/1.9/topics/forms/
-# @ensure_csrf_cookie
-# @csrf_protect
-# def process_driver(request):
-# 	print("this is working")
-# 	# if this is a POST request we need to process the form data
-# 	if request.method == 'POST':
-#         # create a form instance and populate it with data from the request:
-# 		form = DriverForm(request.POST)
-# 		print(form.is_bound)
-#         # check whether it's valid:
-# 		if form.is_valid():
-#             # process the data in form.cleaned_data as required
-#             # ...
-#             # redirect to a new URL:
-# 			return HttpResponseRedirect('/driver/')
-#
-#     # if a GET (or any other method) we'll create a blank form
-# 	else:
-# 		print("fell through")
-# 		form = DriverForm()
-# 		return render(request, 'base.html', {'form' : form})
-# 		#http://stackoverflow.com/questions/8089224/csrf-token-missing-or-incorrect
-# 		return render_to_response("base.html", {'form' : form}, context_instance = RequestContext(request))
-#
-# def get_name(request):
-#     # if this is a POST request we need to process the form data
-#     if request.method == 'POST':
-#         # create a form instance and populate it with data from the request:
-#         form = NameForm(request.POST)
-#         # check whether it's valid:
-#         if form.is_valid():
-#             # process the data in form.cleaned_data as required
-#             # ...
-#             # redirect to a new URL:
-#             return HttpResponseRedirect('/thanks/')
-#
-#     # if a GET (or any other method) we'll create a blank form
-#     else:
-#         form = NameForm()
-#
-#     return render(request, 'name.html', {'form': form})
-#
-# def post_form(request):
-# 	form = PostForm()
-# 	return render(request, 'postform.html', {'form': form})
-# >>>>>>> 5e286c94ec196acc43469d6451f4dc0f6e3608dd
+def new_user_page(request):
+    #gets the name from the request
+    #creaet object from the name
+    user_ = User.objects.create(nameFirst = request.POST['first_name_text'],
+                                nameLast = request.POST['last_name_text'],
+                                start = request.POST['start_text'],
+                                end = request.POST['end_text'],
+                                date = request.POST['date_text'])
+    #save the object
+    user_.save()
+    print("in the new user page")
+    # return redirect('/user/%s/' % new_user_name)
+    return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+                                            'user_last_name': user_.nameLast,
+                                            'user_start_loc': user_.start,
+                                            'user_end_loc': user_.end,
+                                            'user_date': user_.date})
