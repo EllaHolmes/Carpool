@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -13,27 +12,26 @@
   </head>
   <body>
     <!-- All of your HTML will go between here.... -->
-    <h1>Carpool: Post a Ride</h1>
-    <form action = "/driver/" method = "post">
-        {% csrf_token %}
-        {{ form }}
-        <input id="id_first_name" placeholder="First Name" value="{{ first_name }}"/>
-        <input id="id_last_name" placeholder="Last Name" value="{{ last_name }}"/>
-        <input id="id_start" placeholder="Start Location" value="{{ id_start }}"/>
-        <input id="id_end" placeholder="End Location" value="{{ id_end }}"/>
-        <input type="submit" value="OK">
+    <h1>Carpool: Find a Ride</h1>
+    <form method="POST" action = "/welcome/">
+      <input name = "first_name_text" id="id_first_name" placeholder="First Name"/>
+      <input name = "last_name_text" id="id_last_name" placeholder="Last Name"/>
+      <input name = "start_text" id="id_start" placeholder="Start Location"/>
+      <input name = "end_text" id="id_end" placeholder="End Location"/>
+      <input name = "date_text" id="id_date" placeholder="Travel Date"/>
+      <!-- <a href = "/welcome/">Submit</a> -->
+      <button id="id_new_driver_btn"
+            type="submit"
+            class="btn btn-primary"
+            >New Driver</button>
+      {% csrf_token %}
     </form>
-    
 
     <!-- ...and here. -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>
   </head>
-
-
 </html>
