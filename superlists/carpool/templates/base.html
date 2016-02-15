@@ -13,17 +13,19 @@
   <body>
     <!-- All of your HTML will go between here.... -->
     <h1>Carpool: Find a Ride</h1>
-    <form method="POST">
+    <form method="POST" action = "/welcome/">
       <input name = "first_name_text" id="id_first_name" placeholder="First Name"/>
-      <input id="id_last_name" placeholder="Last Name"/>
-      <input id="id_start" placeholder="Start Location"/>
-      <input id="id_end" placeholder="End Location"/>
+      <input name = "last_name_text" id="id_last_name" placeholder="Last Name"/>
+      <input name = "start_text" id="id_start" placeholder="Start Location"/>
+      <input name = "end_text" id="id_end" placeholder="End Location"/>
+      <input name = "date_text" id="id_date" placeholder="Travel Date"/>
+      <!-- <a href = "/welcome/">Submit</a> -->
+      <button id="id_new_driver_btn"
+            type="submit"
+            class="btn btn-primary"
+            >New Driver</button>
       {% csrf_token %}
     </form>
-    <button id="id_new_driver_btn"
-            type="submit"
-            class="btn"
-            >New Driver</button>
 
     <!-- ...and here. -->
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
