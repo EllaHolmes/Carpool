@@ -12,7 +12,7 @@ def home_page(request):
 
 def new_user_page(request):
     #gets the name from the request
-    new_user_name = request.POST['first_name_text']
+    # new_user_name = request.POST['first_name_text']
     #creaet object from the name
     user_ = User.objects.create(nameFirst = request.POST['first_name_text'],
                                 nameLast = request.POST['last_name_text'],
