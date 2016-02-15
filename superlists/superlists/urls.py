@@ -15,12 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from carpool import views
-# from carpool.views import new_user_choice
-# from carpool.views import driver_home_page
-# from carpool.views import current_datetime
-# from carpool.views import process_driver
-# from carpool.views import test_form
-# from carpool.views import get_name
 
 urlpatterns = [
     url(r'^$', views.home_page, name = 'home'),
