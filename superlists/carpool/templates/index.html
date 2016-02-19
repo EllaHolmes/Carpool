@@ -64,6 +64,13 @@
     </select>
     </div>
     <div id="map"></div>
+    <table>       
+          <td>{{ user_first_name }}</td>
+          <td>{{ user_last_name }}</td>
+          <td id = "startLoc">{{ user_start_loc }}</td>
+          <td id = "endLoc">{{ user_end_loc }}</td>
+          <td>{{ user_date }}</td>
+    </table>
     <script>
 function initMap() {
   var directionsService = new google.maps.DirectionsService;
@@ -79,12 +86,14 @@ function initMap() {
   };
   document.getElementById('start').addEventListener('change', onChangeHandler);
   document.getElementById('end').addEventListener('change', onChangeHandler);
+  calculateAndDisplayRoute(directionsService, directionsDisplay);
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+  
   directionsService.route({
-    origin: "361 Ulmer ct, Redwood city, ca",
-    destination: "los angeles",
+    origin: document.getElementById('startLoc').innerHTML,
+    destination: document.getElementById('endLoc').innerHTML,
     travelMode: google.maps.TravelMode.DRIVING
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
@@ -99,12 +108,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true&callback=initMap"
         async defer></script>
   
-  <table>				
-					<td>{{ user_first_name }}</td>
-					<td>{{ user_last_name }}</td>
-					<td>{{ user_start_loc }}</td>
-					<td>{{ user_end_loc }}</td>
-					<td>{{ user_date }}</td>
-    </table>
+  
   </body>
 </html>
