@@ -2,6 +2,7 @@ from django.core.urlresolvers import resolve
 from django.template.loader import render_to_string
 from django.test import TestCase
 from django.http import HttpRequest
+from carpool.models import User
 from carpool.views import home_page, new_user_page
 
 # Create your tests here.
