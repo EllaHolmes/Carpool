@@ -2,10 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
 import carpool.views
+from django.conf import settings
+from carpool.models import User
+
+
 
 class NewDriverVisitorTest(unittest.TestCase):
 
     find_ride_page_title = "Find a Ride"
+    settings.configure()
 
     def setUp(self):
         self.browser = webdriver.Firefox()
@@ -13,9 +18,27 @@ class NewDriverVisitorTest(unittest.TestCase):
 
     def tearDown(self):
         self.browser.quit()
+		
+		
 
     def enter_new_carpool_driver(self, firstName, lastName, startLocation, endLocation):
         inputFirstName = self.browser.find_element_by_id('id_first_name')
+
+        inputLastName = self.browser.find_element_by_id('id_last_name')
+        inputStart = self.browser.find_element_by_id('id_start')
+        inputEnd = self.browser.find_element_by_id('id_end')
+        inputDate = self.browser.find_element_by_id('id_date')
+        inputFirstName.send_keys(firstName)
+        inputLastName.send_keys(lastName)
+        inputStart.send_keys(startLocation)
+        inputEnd.send_keys(endLocation)
+        inputDate.send_keys(date)
+        testDriver = User(name = firstName)
+		#User(first_name = firstName, last_name = lastName, start_loc = startLocation, end_loc = endLocation)
+		
+        # enterButton = self.browser.find_element_by_id('id_new_driver_btn')
+        # enterButton.send_key(Keys.ENTER)
+
         # inputLastName = self.browser.find_element_by_id('id_last_name')
         # inputStart = self.browser.find_element_by_id('id_start')
         # inputEnd = self.browser.find_element_by_id('id_end')
