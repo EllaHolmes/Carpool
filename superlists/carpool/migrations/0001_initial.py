@@ -13,7 +13,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='User',
             fields=[
-                ('id', models.AutoField(serialize=False, auto_created=True, verbose_name='ID', primary_key=True)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', serialize=False, auto_created=True)),
+                ('nameFirst', models.TextField(default='')),
+                ('nameLast', models.TextField(default='')),
+                ('start', models.TextField(default='')),
+                ('end', models.TextField(default='')),
+                ('date', models.TextField(default='')),
             ],
         ),
     ]
