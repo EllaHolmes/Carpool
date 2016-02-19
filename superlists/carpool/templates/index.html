@@ -11,7 +11,8 @@
         padding: 0;
       }
       #map {
-        height: 100%;
+        height: 75%;
+		width: 75%;
       }
 #floating-panel {
   position: absolute;
@@ -83,7 +84,7 @@ function initMap() {
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
   directionsService.route({
     origin: "361 Ulmer ct, Redwood city, ca",
-    destination: "Los Angeles",
+    destination: "los angeles",
     travelMode: google.maps.TravelMode.DRIVING
   }, function(response, status) {
     if (status === google.maps.DirectionsStatus.OK) {
