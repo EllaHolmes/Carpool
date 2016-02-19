@@ -18,6 +18,5 @@ from carpool import views
 
 urlpatterns = [
     url(r'^$', views.home_page, name = 'home'),
-    url(r'^welcome/$', views.new_user_page, name ="welcome"),
-	#url(r'^admin/', include(admin.site.urls)),
+    url(r'^welcome/$', views.new_user_page, name = 'welcome'),
 ]

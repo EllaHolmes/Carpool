@@ -8,32 +8,30 @@ from carpool.models import User
 # Create your tests here.
 class HomePageTest(TestCase):
 
-	def test_root_url_resolves_to_home_page_view(self):
-		found = resolve('/')
-		self.assertEqual(found.func, home_page)
+    def test_root_url_resolves_to_home_page_view(self):
+        found = resolve('/')
+        self.assertEqual(found.func, home_page)
 
-	def test_home_page_returns_correct_html(self):
-		request = HttpRequest()
-		response = home_page(request)
-		expected_html = render_to_string('base.html')
-		self.assertEqual(response.content.decode(), expected_html)
-		
-	def test_can_save_user_info(self):
-		first_user = User(nameFirst = "Mary", nameLast = "Jane", start = "New York", end = "Hampshire", date= "Today")
-		
-		first_user.text = 'First user'
-		first_user.save()
-		
-		self.assertEqual(User.objects.all().count(), 1)
-		
-	def test_home_page_can_save_user(self):
-		request = HttpRequest()
-		request.method = 'POST'
-		request.POST['fname'] = 'A new user first name'
-		
-		response = home_page(request)
-		
-		self.assertEqual(User.objects.all().count(), 1)
-		
-	def test_home_page_can_redirect_and_use_data_base(self):
-		pass
+    def test_home_page_returns_correct_html(self):
+        request = HttpRequest()
+        response = home_page(request)
+        expected_html = render_to_string('base.html')
+        self.assertEqual(response.content.decode(), expected_html)
+
+    def test_home_page_saves_name_and_posts_to_new_page(self):
+        request = HttpRequest()
+        request.method = 'POST'
+
+        request.POST['first_name_text'] = 'Ella'
+        request.POST['last_name_text'] = 'Holmes'
+        request.POST['start_text'] = 'New York'
+        request.POST['end_text'] = 'Boston'
+        request.POST['date_text'] = '1/1/11'
+
+        response = new_user_page(request)
+
+        self.assertIn('Ella', response.content.decode())
+        self.assertIn('Holmes', response.content.decode())
+        self.assertIn('New York', response.content.decode())
+        self.assertIn('Boston', response.content.decode())
+        self.assertIn('1/1/11', response.content.decode())
