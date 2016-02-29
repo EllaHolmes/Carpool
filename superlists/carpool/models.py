@@ -2,7 +2,14 @@ from __future__ import unicode_literals
 from django.db import models
 
 # Create your models here.
-class User(models.Model):
+class Driver(models.Model):
+    nameFirst = models.TextField(default = '')
+    nameLast = models.TextField(default = '')
+    start = models.TextField(default = '')
+    end = models.TextField(default = '')
+    date = models.TextField(default = '')
+
+class Rider(models.Model):
     nameFirst = models.TextField(default = '')
     nameLast = models.TextField(default = '')
     start = models.TextField(default = '')

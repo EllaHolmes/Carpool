@@ -22,8 +22,14 @@
       <!-- <a href = "/welcome/">Submit</a> -->
       <button id="id_new_driver_btn"
             type="submit"
+            name = "newDriver"
             class="btn btn-primary"
             >New Driver</button>
+     <button id="id_new_rider_btn"
+             type="submit"
+             name = "newRider"
+            class="btn btn-primary"
+            >New Rider</button>
       {% csrf_token %}
     </form>
 
@@ -33,5 +39,4 @@
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
   </body>
-  </head>
 </html>
