@@ -27,6 +27,7 @@ def create_new_driver(request):
                                 date = request.POST['date_text'])
     #save the object
     user_.save()
+    # riders_ =find_riders()
     return user_
 
 def create_new_rider(request):
@@ -38,4 +39,5 @@ def create_new_rider(request):
                                 date = request.POST['date_text'])
     #save the object
     user_.save()
+    # driver_ =find_driver()
     return user_
