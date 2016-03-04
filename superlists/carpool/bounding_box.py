@@ -1,4 +1,6 @@
 # Static variables
+debugging = True
+
 top_tag = "Top"
 bottom_tag = "Bottom"
 left_tag = "Left"
@@ -11,44 +13,111 @@ bottom_left_tag = bottom_tag + join_char + left_tag
 bottom_right_tag = bottom_tag + join_char + right_tag
 
 # Classes
-class BoundingBox():
+class BoundingBox(object):
+	
+	if (debugging):
+		print ("Creating a bounding box object...")
 
+	x_offset = 0
+	y_offset = 0
+
+	def set_offset (self, x_offset, y_offset):
+		
+		self.x_offset = x_offset
+		self.y_offset = y_offset
+
+		if (debugging):
+			print ("The offset is (" + str(x_offset) + ", " + str(y_offset) + ")")
 
 	def create(self, start_lat, start_lng, end_lat, end_lng):
-		# Gets the two points
-		self.start = LatLng(start_lat, start_lng)
-		self.end = LatLng(end_lat, end_lng)
 
-		start_tag = self.get_corner_tag(self.start, self.end)
-		end_tag = self.get_corner_tag(self.end, self.start)
+		# Sets the two points
+		self.set_start_pos(start_lat, start_lng)
+		self.set_end_pos(end_lat, end_lng)
 
-		self.top_left_corner = None
-		self.top_right_corner = None
-		self.bottom_left_corner = None
-		self.bottom_right_corner = None
+		# Sets the tags on the start and end positions
+		self.set_tags()
 
-		if start.lat > end.lat and start.lng > end.lng:
-			#top_left_corner = 
-			bottom_right_corner = end
-			
+		# Sets the corners of the bounding box
+		self.set_corners()
 
-		# Determines which corners they are
+		if (debugging):
+			print("Created " + str(self))
 
+	def set_start_pos(self, lat, lng):
+		self.start_pos = LatLng(lat, lng)
+		
+		if (debugging):
+			print("The start position is " + str(self.start_pos))
 
-		# Sets them as those two 
+	def set_end_pos(self, lat, lng):
+		self.end_pos = LatLng(lat, lng)
+		
+		if (debugging):
+			print("The end position is " + str(self.end_pos))
 
-	def get_corner(self, tag, offset_x, offset_y, start_pos, end_pos):
+		
+	# Sets the tags of the start and end position to indicate their positions
+	def set_tags(self):
+
+		self.start_pos.set_tag (
+			self.get_corner_tag(
+				self.start_pos, 
+				self.end_pos
+			)
+		)
+
+		self.end_pos.set_tag( 
+			self.get_corner_tag(
+				self.end_pos, 
+				self.start_pos
+			)
+		)
+		
+	# Sets the position of the corners of the bounding box
+	def set_corners(self):
+		
+		self.top_left_corner = self.get_corner (
+			top_left_tag	
+		)
+
+		self.top_right_corner = self.get_corner (
+			top_right_tag
+		)
+
+		self.bottom_left_corner = self.get_corner (
+			bottom_left_tag
+		)
+
+		self.bottom_right_corner = self.get_corner (
+			bottom_right_tag
+		)
+
+	def get_corner(self, tag, x_offset = None, y_offset = None, start_pos = None, end_pos = None):
+		
+		if (y_offset == None):
+			y_offset = self.y_offset
+
+		if (x_offset == None):
+			x_offset = self.x_offset
+
+		if (start_pos == None):
+			start_pos = self.start_pos
+
+		if (end_pos == None):
+			end_pos = self.end_pos
+
 		position = LatLng(0, 0, tag)
 
 		# Fetch the tags for the positions
 		self_lat_tag = self.get_lat_tag(tag)
 		self_lng_tag = self.get_lng_tag(tag)
 
-		start_lat_tag = self.get_lat_tag(start_pos.tag)
-		start_lng_tag = self.get_lng_tag(start_pos.tag)
+		start_lat_tag = start_pos.get_lat_tag()
+		start_lng_tag = start_pos.get_lng_tag()
 
-		end_lat_tag = self.get_lat_tag(end_pos.tag)
-		end_lng_tag = self.get_lng_tag(end_pos.tag)
+		end_lat_tag = end_pos.get_lat_tag()
+		end_lng_tag = end_pos.get_lng_tag()
 
 		# Set the latitude of this corner
 		if (self_lat_tag == start_lat_tag):
@@ -71,14 +140,28 @@ class BoundingBox():
 		else:
 			self.throw_tag_error(self_lat_tag)
 
-		# TODO: Modify the corner pos with the offsets
+		position = self.adjust_position_by_offset(position, x_offset, y_offset)
 		
-		# ---->
+		return position
+
+	def adjust_position_by_offset(self, position, x_offset, y_offset):
+		lat_tag = position.get_lat_tag()
+		lng_tag = position.get_lng_tag()
+
+		if (lat_tag == right_tag):
+			x_offset *= -1
+
+		if (lng_tag == top_tag):
+			y_offset *= -1
+
+		position.translate(x_offset, y_offset)
 
 		return position
 
+
 	def throw_tag_error (self, tag):
-		print("!!! Unregistered tag: " + tag + "\n -->Returning None")
+		if (debugging):
+			print("!!! Unregistered tag: " + tag + "\n -->Returning None")
 		return None
 
 	# Pass in two points (the two for the route) and it can compare
@@ -95,11 +178,6 @@ class BoundingBox():
 
 		return lng_tag + join_char + lat_tag
 		
-	def test_corner_tag (self):
-		this_point = LatLng(5, 5)
-		compare_point = LatLng(-5, 10)
-		return self.get_corner_tag(this_point, compare_point)
-
 	def get_lat_tag (self, tag):
 		return self.get_tag_param(tag, 1)		
 
@@ -108,6 +186,37 @@ class BoundingBox():
 
 	def get_tag_param (self, tag, param_index):
 		return tag.split(join_char)[param_index]
+
+	# Static test
+	def test_corner_tag (self):
+		this_point = LatLng(5, 5)
+		compare_point = LatLng(-5, 10)
+		return self.get_corner_tag(this_point, compare_point)
+
+	def in_bounds (self, x_pos, y_pos):
+		bounds_check = (x_pos >= self.top_right_corner.lat and 
+			x_pos <= self.top_left_corner.lat and 
+			y_pos >= self.top_right_corner.lng and 
+			y_pos <= self.bottom_right_corner.lng)
+
+
+		if (debugging):
+			print ("The point " + 
+				str(x_pos) + ", " + str(y_pos) + 
+				" is in bounds " + 
+				str(bounds_check)
+			)
+
+		return bounds_check
+
+	def __str__ (self):
+		return ("Bounding Box Object. Corners: \n{\n" + 
+			"\t" + str(self.top_left_corner) + ",\n" +
+			"\t" + str(self.top_right_corner) + ",\n" +
+			"\t" + str(self.bottom_left_corner) + ",\n" +
+			"\t" + str(self.bottom_right_corner) + "\n}")
+
+	
 
 class LatLng(object):
 	
@@ -126,18 +235,54 @@ class LatLng(object):
 	def set_lng(self, lng):
 		self.lng = lng
 
+	def get_lat_tag (self):
+		return self.get_tag_param(1)		
+
+	def get_lng_tag (self):
+		return self.get_tag_param(0)
+
+	def get_tag_param (self, param_index):
+		return self.tag.split(join_char)[param_index]
+
+	def translate (self, delta_lat, delta_lng):
+		self.lat += delta_lat
+		self.lng += delta_lng
+
 	def __str__(self):
-		return "Lat: " + str(self.lat) + ", Lng: " + str(self.lng) + " Tag: " + self.tag
+		lat_lng_as_string = (
+			"Lat: " + 
+			str(self.lat) + 
+			", Lng: " + 
+			str(self.lng)
+		)
 
-bounding_box = BoundingBox()
+		if (self.tag != None):
+			lat_lng_as_string += " Tag: " + self.tag
 
-start_lat = 5
-start_lng = 5
-end_lat = -5
-end_lng = -5
-start_pos = LatLng(start_lat, start_lng, bottom_left_tag)
-end_pos = LatLng(end_lat, end_lng, top_right_tag)
-tag = bounding_box.test_corner_tag()
-lat_tag = bounding_box.get_lat_tag(tag)
-lng_tag = bounding_box.get_lng_tag(tag)
-print ("Here is the top left corner:\n" + str(bounding_box.get_corner(top_left_tag, 0, 0, start_pos, end_pos)) + "\n")
+		return "{" + lat_lng_as_string + "}"
+
+
+if (debugging):
+
+	bounding_box = BoundingBox()
+	
+	bounding_box.set_offset(2.5, 2.1)
+	
+	
+
+	start_lat = 4
+	start_lng = 6
+	end_lat = -7
+	end_lng = -4.5
+
+	bounding_box.create(start_lat, start_lng, end_lat, end_lng)
+
+	start_pos = LatLng(start_lat, start_lng, bottom_left_tag)
+	end_pos = LatLng(end_lat, end_lng, top_right_tag)
+	tag = bounding_box.test_corner_tag()
+	lat_tag = bounding_box.get_lat_tag(tag)
+	lng_tag = bounding_box.get_lng_tag(tag)
+	
+	bounding_box.in_bounds(1, 1)
+	bounding_box.in_bounds(10, 10)
+	bounding_box.in_bounds(-5, -2)
