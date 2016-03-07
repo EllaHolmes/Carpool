@@ -12,19 +12,27 @@ def home_page(request):
 def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
-        user_list = find_riders_for_a_driver( user_)
+        rider_list = find_riders_for_a_driver( user_)
+        return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+                                                'user_last_name': user_.nameLast,
+                                                'user_start_loc': user_.start,
+                                                'user_end_loc': user_.end,
+                                                'user_date': user_.date,
+                                                'list_of_riders': rider_list})
 
     elif 'newRider' in request.POST:
         user_ = create_new_rider(request)
-        user_list = find_drivers_for_a_rider(user_)
+        # driver_list = find_drivers_for_a_rider(user_)
+        # return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+        #                                         'user_last_name': user_.nameLast,
+        #                                         'user_start_loc': user_.start,
+        #                                         'user_end_loc': user_.end,
+        #                                         'user_date': user_.date,
+        #                                         ''})
     else:
         print ("error: are you a rider or a driver?")
 
-    return render( request, 'index.html', {'user_first_name': user_.nameFirst,
-                                            'user_last_name': user_.nameLast,
-                                            'user_start_loc': user_.start,
-                                            'user_end_loc': user_.end,
-                                            'user_date': user_.date})
+
 
 
 def create_new_driver(request):

@@ -5,7 +5,7 @@ import carpool.views
 class NewRiderVisitorTest(unittest.TestCase):
 
     find_ride_page_title = "Find a Ride"
-    
+
     def setUp(self):
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
@@ -23,7 +23,7 @@ class NewRiderVisitorTest(unittest.TestCase):
 
        # response = carpool.views.new_user_choice(request)
        pass
-    
+
     def test_user_can_make_an_account (self):
         #user loads the website
         self.browser.get('http://localhost:8000')
