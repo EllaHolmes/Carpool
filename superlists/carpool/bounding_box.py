@@ -248,6 +248,10 @@ class LatLng(object):
 		self.lat += delta_lat
 		self.lng += delta_lng
 
+		# Accounts for wrap around
+		self.lat = wrap_lat(self.lat)
+		self.lng = wrap_lng(self.lng)
+
 	def __str__(self):
 		lat_lng_as_string = (
 			"Lat: " + 
@@ -262,6 +266,23 @@ class LatLng(object):
 		return "{" + lat_lng_as_string + "}"
 
 
+# LatLng Util Functions
+def wrap_lat (lat):
+	if (lat > 90):
+		return lat - 180
+	elif (lat < -90):
+		return lat + 180
+	else:
+		return lat
+
+def wrap_lng (lng):
+	if (lng > 180):
+		return lng - 360
+	elif (lng < -180):
+		return lng + 360
+	else:
+		return lng
+
 if (debugging):
 
 	bounding_box = BoundingBox()
@@ -270,8 +291,8 @@ if (debugging):
 	
 	
 
-	start_lat = 4
-	start_lng = 6
+	start_lat = 89
+	start_lng = 179
 	end_lat = -7
 	end_lng = -4.5
 
