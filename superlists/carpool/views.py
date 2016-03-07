@@ -4,7 +4,10 @@ from carpool.models import Rider, Driver
 
 # Create your views here.
 def home_page(request):
-    return render(request, 'base.html')
+	if 'newRider' in request.POST:
+		user_= create_new_rider(request)
+		user_.save()
+	return render(request, 'base.html')
 
 def new_user_page(request):
     if 'newDriver' in request.POST:
