@@ -12,14 +12,22 @@ top_right_tag = top_tag + join_char + right_tag
 bottom_left_tag = bottom_tag + join_char + left_tag
 bottom_right_tag = bottom_tag + join_char + right_tag
 
+
+
+
 # Classes
 class BoundingBox(object):
 	
 	if (debugging):
 		print ("Creating a bounding box object...")
-
+	
+	offset_scale = 0.1
 	x_offset = 0
 	y_offset = 0
+
+	def set_relative_offset_scale(self, offset):
+		self.offset_scale = offset
+
 
 	def set_offset (self, x_offset, y_offset):
 		
@@ -29,11 +37,18 @@ class BoundingBox(object):
 		if (debugging):
 			print ("The offset is (" + str(x_offset) + ", " + str(y_offset) + ")")
 
+	def set_offset_scale(self, start_pos, end_pos):
+		self.x_offset = abs(start_pos.lat - end_pos.lat) * self.offset_scale
+		self.y_offset = abs(start_pos.lng - end_pos.lng) * self.offset_scale
+
 	def create(self, start_lat, start_lng, end_lat, end_lng):
 
 		# Sets the two points
 		self.set_start_pos(start_lat, start_lng)
 		self.set_end_pos(end_lat, end_lng)
+
+		# Sets the offset
+		self.set_offset_scale(self.start_pos, self.end_pos)
 
 		# Sets the tags on the start and end positions
 		self.set_tags()
@@ -287,10 +302,8 @@ if (debugging):
 
 	bounding_box = BoundingBox()
 	
-	bounding_box.set_offset(2.5, 2.1)
+	bounding_box.set_relative_offset_scale(0.1)
 	
-	
-
 	start_lat = 89
 	start_lng = 179
 	end_lat = -7
