@@ -13,7 +13,7 @@
   <body>
     <!-- All of your HTML will go between here.... -->
     <h1>Carpool: Find a Ride</h1>
-    <form method="POST" action = "/welcome/">
+    <form method="POST" action ="/welcome/">
       <input name = "first_name_text" id="id_first_name" placeholder="First Name"/>
       <input name = "last_name_text" id="id_last_name" placeholder="Last Name"/>
       <input name = "start_text" id="id_start" placeholder="Start Location"/>
@@ -28,7 +28,8 @@
      <button id="id_new_rider_btn"
              type="submit"
              name = "newRider"
-            class="btn btn-primary"
+             class="btn btn-primary"
+			 formaction=""
             >New Rider</button>
       {% csrf_token %}
     </form>
