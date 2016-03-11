@@ -14,19 +14,7 @@
         height: 75%;
 		    width: 75%;
       }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
+    
 
     </style>
   </head>
@@ -92,9 +80,8 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 var markers = [
-        ['Test Start', 37.449885, -122.196584, start = true, end = false],
-        ['Test End', 37.49,-122.20]
-    ];
+        [[37.449885,-122.196584], [37.49, -122.20], "Fed"],
+        ];
 
 var infoWindowContent = [
         ['<div class="info_content">' +
