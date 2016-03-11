@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from carpool.models import Rider, Driver
+import json
+from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 def home_page(request):
@@ -13,6 +15,7 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
+        #rider_list_json = json.dumps(list(rider_list), cls=DjangoJSONEncoder)
         return render( request, 'index.html', {'user_first_name': user_.nameFirst,
                                                 'user_last_name': user_.nameLast,
                                                 'user_start_loc': user_.start,
