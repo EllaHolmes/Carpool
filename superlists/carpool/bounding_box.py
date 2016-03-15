@@ -1,5 +1,5 @@
 # Static variables
-debugging = True
+debugging = False
 
 top_tag = "Top"
 bottom_tag = "Bottom"
@@ -158,6 +158,18 @@ class BoundingBox(object):
 		position = self.adjust_position_by_offset(position, x_offset, y_offset)
 		
 		return position
+
+	def get_top_left_corner (self):
+		return self.top_left_corner
+
+	def get_top_right_corner (self):
+		return self.top_right_corner
+	
+	def get_bottom_left_corner (self):
+		return self.bottom_left_corner		
+
+	def get_bottom_right_corner (self):
+		return self.bottom_right_corner
 
 	def adjust_position_by_offset(self, position, x_offset, y_offset):
 		lat_tag = position.get_lat_tag()
@@ -320,3 +332,5 @@ if (debugging):
 	bounding_box.in_bounds(1, 1)
 	bounding_box.in_bounds(10, 10)
 	bounding_box.in_bounds(-5, -2)
+
+	print (bounding_box.get_bottom_left_corner())
