@@ -14,19 +14,7 @@
         height: 75%;
 		    width: 75%;
       }
-      #floating-panel {
-        position: absolute;
-        top: 10px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
+    
 
     </style>
   </head>
@@ -55,7 +43,7 @@ function initMap() {
 
 
 	for( i = 0; i < markers.length; i++ ) {
-        var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
+        var position = new google.maps.LatLng(markers[i][0][0], markers[i][0][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
@@ -92,13 +80,12 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 }
 
 var markers = [
-        ['Test Start', 37.449885, -122.196584, start = true, end = false],
-        ['Test End', 37.49,-122.20]
-    ];
+        [[37.449885,-122.196584], [37.49, -122.20], "Fed"],
+        ];
 
 var infoWindowContent = [
         ['<div class="info_content">' +
-        '<h3>Test start</h3>' +
+        '<h3>' + markers[0][2] + '</h3>' +
         '<p>This is test information.</p>' +
 		'</div>'],
         ['<div class="info_content">' +
