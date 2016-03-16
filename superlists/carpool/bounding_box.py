@@ -1,3 +1,5 @@
+import math
+
 # Static variables
 debugging = False
 
@@ -278,6 +280,13 @@ class LatLng(object):
 		# Accounts for wrap around
 		self.lat = wrap_lat(self.lat)
 		self.lng = wrap_lng(self.lng)
+
+	# Uses pythagorean theorem to determine distance to another pos
+	def distance (self, other_lat_lng):
+		return math.sqrt(
+			math.pow(self.lat - other_lat_lng.lat, 2) +
+			math.pow(self.lng - other_lat_lng.lng, 2)
+		)
 
 	def __str__(self):
 		lat_lng_as_string = (
