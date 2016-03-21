@@ -1,0 +1,82 @@
+// A class used to parse objects from a SQL Lite Database in the Python DjangoFramework
+function PythonDatabaseObjectParser (){};
+
+// Takes a single object and returns it as an array of parameters (removes object header)
+PythonDatabaseObjectParser.prototype.parseObjectAsArray = function(objectAsText, obectHeaderString) {
+    // Removes the header
+    objectAsText = objectAsText.replace(obectHeaderString + ": ", "");
+    // And the chevrons
+    objectAsText = objectAsText.replace("<", "");
+    objectAsText = objectAsText.replace(">", "");
+
+    var objectAsArray = objectAsText.split(",");
+
+    return objectAsArray;
+};
+
+// Parses a single string into an array of strings: still in the SQL Lite database format
+PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectArrayAsText) {    
+    objectArrayAsText = objectArrayAsText.replace("]", "");
+    objectArrayAsText = objectArrayAsText.replace("[", "");
+    return objectArrayAsText.split(", ")
+
+}
+
+// Parses a single string in the SQL Lite database format into a matrix of strings (2D Array)
+PythonDatabaseObjectParser.prototype.parseObjectArrayAsStringMatrix = function(
+  objectArrayAsTextArray, 
+  objectHeaderAsString) {
+
+  objectArrayAsTextArray = this.replaceEscapeCharacters(objectArrayAsTextArray);
+
+  var allObjectsAsStringArrays = [];
+  
+  var allObjectsAsStrings = this.parseStringAsStringArray(objectArrayAsTextArray);
+
+  for (var i = 0; i < allObjectsAsStrings.length; i++) {
+    allObjectsAsStringArrays.push(this.parseObjectAsArray(allObjectsAsStrings[i], objectHeaderAsString));
+  }    
+
+  return allObjectsAsStringArrays;
+
+}
+
+// Used to replace special characters in the SQL Lite string (preprocessing function)
+PythonDatabaseObjectParser.prototype.replaceEscapeCharacters = function(objectsAsString) {
+    objectsAsString = objectsAsString.replace(/&lt/g, "<");
+    objectsAsString = objectsAsString.replace(/&gt/g, ">");
+    objectsAsString = objectsAsString.replace(/\n/g, "");
+    objectsAsString = objectsAsString.replace(/;/g, "");
+    return objectsAsString;
+}
+
+// Used to represent a user in JavaScript
+function User (lastName, firstName, start, end, date) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.start = start;
+  this.end = end;
+  this.date = date;
+}
+
+// Static function: creates a user from a string array of length 5
+User.parseFromStringArray = function (stringArray) {
+    // Assumes a particular ordering
+    return new User (
+        stringArray[0],
+        stringArray[1],
+        stringArray[2],
+        stringArray[3],
+        stringArray[4]
+    );
+}
+
+// Static function: Takes a 2D array of strings and parses as an array of users
+// intended to be used in conjunction with: parseObjectArrayAsStringMatrix
+User.parseFromStringArrayMatrix = function (stringMatrix) {
+  users = [];
+  for (var i = 0; i < stringMatrix.length; i++) {
+      users.push(User.parseFromStringArray(stringMatrix[i]));
+  }
+  return users;
+}
