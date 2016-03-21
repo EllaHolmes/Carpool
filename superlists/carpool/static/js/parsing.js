@@ -1,3 +1,5 @@
+var splitChar = "_";
+
 // A class used to parse objects from a SQL Lite Database in the Python DjangoFramework
 function PythonDatabaseObjectParser (){};
 
@@ -9,7 +11,7 @@ PythonDatabaseObjectParser.prototype.parseObjectAsArray = function(objectAsText,
     objectAsText = objectAsText.replace("<", "");
     objectAsText = objectAsText.replace(">", "");
 
-    var objectAsArray = objectAsText.split(",");
+    var objectAsArray = objectAsText.split(splitChar);
 
     return objectAsArray;
 };
@@ -18,7 +20,8 @@ PythonDatabaseObjectParser.prototype.parseObjectAsArray = function(objectAsText,
 PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectArrayAsText) {    
     objectArrayAsText = objectArrayAsText.replace("]", "");
     objectArrayAsText = objectArrayAsText.replace("[", "");
-    return objectArrayAsText.split(", ")
+    objectArrayAsText = objectArrayAsText.replace(/>,/g, ">_");
+    return objectArrayAsText.split(splitChar + " ");
 
 }
 
@@ -63,11 +66,11 @@ function User (lastName, firstName, start, end, date) {
 User.parseFromStringArray = function (stringArray) {
     // Assumes a particular ordering
     return new User (
-        stringArray[0],
-        stringArray[1],
-        stringArray[2],
-        stringArray[3],
-        stringArray[4]
+        stringArray[0].trim(),
+        stringArray[1].trim(),
+        stringArray[2].trim(),
+        stringArray[3].trim(),
+        stringArray[4].trim()
     );
 }
 

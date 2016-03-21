@@ -1,6 +1,8 @@
 from __future__ import unicode_literals
 from django.db import models
 
+split_char = "_"
+
 # Create your models here.
 class Driver(models.Model):
     nameFirst = models.TextField(default = '')
@@ -20,7 +22,11 @@ class Driver(models.Model):
         return driver
 
     def __str__ (self):
-        return (self.nameLast + "," + self.nameFirst + "," + self.start + "," + self.end + "," + self.date)
+        return (self.nameLast + split_char + 
+            self.nameFirst + split_char + 
+            self.start +split_char + 
+            self.end + split_char +
+             self.date)
 
     
 
@@ -42,4 +48,8 @@ class Rider(models.Model):
         return rider
 
     def __str__ (self):
-        return (self.nameLast + "," + self.nameFirst + "," + self.start + "," + self.end + "," + self.date)
+                return (self.nameLast + split_char + 
+            self.nameFirst + split_char + 
+            self.start +split_char + 
+            self.end + split_char +
+             self.date)
