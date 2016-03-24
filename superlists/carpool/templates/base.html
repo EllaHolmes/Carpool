@@ -7,8 +7,19 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Carpool</title>
 
-    <!-- Bootstrap's CSS in our static folder-->
+    <!-- Bootstrap and jQuery are in our static folder-->
+    <script src="/static/js/moment.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- Included both the datetime and the date version of these files so either can be used -->
+    <link href = "/static/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href = "/static/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    
+
   </head>
   <body>
     <!-- All of your HTML will go between here.... -->
@@ -18,7 +29,29 @@
       <input name = "last_name_text" id="id_last_name" placeholder="Last Name"/>
       <input name = "start_text" id="id_start" placeholder="Start Location"/>
       <input name = "end_text" id="id_end" placeholder="End Location"/>
-      <input name = "date_text" id="id_date" placeholder="Travel Date"/>
+        
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" placeholder = "Date" name="date_text" id="id_date"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+
+        <script type="text/javascript">
+            $(function () {
+                $('#datetimepicker1').datepicker("getDate");
+            });
+        </script>
+        
+        <style>
+            #datetimepicker1 {
+              width: 25%;
+              float: right;
+              margin-right: 30em;
+            }
+        </style>
+
+    </div>
+    <br><br>
       <!-- <a href = "/welcome/">Submit</a> -->
       <button id="id_new_driver_btn"
             type="submit"
@@ -34,10 +67,6 @@
       {% csrf_token %}
     </form>
 
-    <!-- ...and here. -->
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
+  
   </body>
 </html>
