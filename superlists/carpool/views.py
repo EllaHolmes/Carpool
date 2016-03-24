@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from carpool.models import Rider, Driver
+from datetime import date
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 
