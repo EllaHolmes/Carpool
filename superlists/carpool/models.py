@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
+import datetime
 
 split_char = "_"
 
@@ -17,7 +18,13 @@ class Driver(models.Model):
         driver.nameLast = last_name
         driver.start = start
         driver.end = end
-        driver.date = date
+        date_string = date.split("/")
+        print(date_string)
+        driver.date = datetime.date(
+            int(date_string[2]),
+            int(date_string[0]),
+            int(date_string[1])
+        )
         # do something with the book
         return driver
 
@@ -26,7 +33,7 @@ class Driver(models.Model):
             self.nameFirst + split_char + 
             self.start +split_char + 
             self.end + split_char +
-             self.date)
+             str(self.date))
 
     
 
@@ -43,7 +50,13 @@ class Rider(models.Model):
         rider.nameLast = last_name
         rider.start = start
         rider.end = end
-        rider.date = date
+        date_string = date.split("/")
+        print(date_string)
+        rider.date = datetime.date(
+            int(date_string[2]),
+            int(date_string[0]),
+            int(date_string[1])
+        )
         # do something with the book
         return rider
 
@@ -52,4 +65,4 @@ class Rider(models.Model):
             self.nameFirst + split_char + 
             self.start +split_char + 
             self.end + split_char +
-             self.date)
+             str(self.date))
