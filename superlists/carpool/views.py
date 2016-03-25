@@ -9,10 +9,10 @@ debugging = True
 
 # Create your views here.
 def home_page(request):
-	if 'newRider' in request.POST:
-		user_= create_new_rider(request)
-		user_.save()
-	return render(request, 'base.html')
+    if 'newRider' in request.POST:
+        user_= create_new_rider(request)
+        user_.save()
+    return render(request, 'base.html')
 
 def new_user_page(request):
     if 'newDriver' in request.POST:
@@ -45,13 +45,14 @@ def create_new_driver(request):
     print ('I can drive')
 
 
-    user_ = Driver.create (
+    user_ = Driver()
+    user_.create(
         request.POST['first_name_text'],
         request.POST['last_name_text'],
         request.POST['start_text'],
         request.POST['end_text'],
         request.POST['date_text']
-    )       
+    )
 
     #save the object
     user_.save()
@@ -63,7 +64,9 @@ def create_new_driver(request):
 def create_new_rider(request):
     print ('I am a new rider')    
 
-    user_ = Rider.create (
+    user_ = Rider()
+
+    user_.create (
         request.POST['first_name_text'],
         request.POST['last_name_text'],
         request.POST['start_text'],
