@@ -65,40 +65,65 @@
       console.log(allRiders);
 
 function initMap() {
-  var directionsService = new google.maps.DirectionsService;
-  var directionsDisplay = new google.maps.DirectionsRenderer;
-  var infoWindow = new google.maps.InfoWindow(), marker, i;
-  var bounds = new google.maps.LatLngBounds();
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
     center: {lat: 39.82, lng: -98.57}
   });
+  var directionsService = new google.maps.DirectionsService;
+  var directionsDisplay = new google.maps.DirectionsRenderer;
+  var geocoder = new google.maps.Geocoder();
+  var infoWindow = new google.maps.InfoWindow(), marker, i;
+  var bounds = new google.maps.LatLngBounds();
+  
   directionsDisplay.setMap(map);
   calculateAndDisplayRoute(directionsService, directionsDisplay);
 
-
-	for( i = 0; i < markers.length; i++ ) {
+  
+  //code below is temp old code which runs better. Puts a dummy point but can fill in info from user input
+  for( i = 0; i < markers.length; i++ ) {
         var position = new google.maps.LatLng(markers[i][0][0], markers[i][0][1]);
         bounds.extend(position);
         marker = new google.maps.Marker({
             position: position,
 			map: map,
-            title: markers[i][0]
+            //title: markers[i][0]
         });
-
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
                 infoWindow.setContent(infoWindowContent[i][0]);
                 infoWindow.open(map, marker);
             }
         })(marker, i));
-
         // Automatically center the map fitting all markers on the screen
-        map.fitBounds(bounds);
-}
-
-  }
-
+        map.fitBounds(bounds);}}
+  
+  
+  //Below is the code that is not working
+  /*
+	for( i = 0; i < markers.length; i++ ) {
+        var position = new google.maps.LatLng(markers[i][0][0], markers[i][0][1]);
+        bounds.extend(position);
+        geocoder.geocode( { 'address': allRiders[i].start}, function(results, status) {
+			marker = new google.maps.Marker({
+				position: results[0].geometry.location,
+				map: map,
+				//title: markers[i][0]
+        })});
+		google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                infoWindow.setContent(
+					'<div class="info_content">' +
+					'<h3>' + allRiders[i].firstName + '</h3>' +
+					'<p>'+ 'the end location is: '+allRiders[i].end +'</p>' +
+					'</div>');
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+        // Automatically center the map fitting all markers on the screen
+        map.fitBounds(bounds)
+  
+  }}
+*/
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
   directionsService.route({
@@ -124,7 +149,7 @@ var riders = document.getElementById("riders");
 console.log(riders)
 var infoWindowContent = [
         ['<div class="info_content">' +
-        '<h3>' + riders[1] + '</h3>' +
+        '<h3>' + allRiders[0].start + '</h3>' +
         '<p>This is test information.</p>' +
 		'</div>'],
         ['<div class="info_content">' +
