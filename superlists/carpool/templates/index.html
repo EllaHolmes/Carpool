@@ -83,11 +83,17 @@ function initMap() {
   for( i = 0; i < markers.length; i++ ) {
         var position = new google.maps.LatLng(markers[i][0][0], markers[i][0][1]);
         bounds.extend(position);
-        marker = new google.maps.Marker({
-            position: position,
-			map: map,
+        geocoder.geocode({'address': allRiders[i].start}, function(results, status){
+			if(status === google.maps.GeocoderStatus.OK) {
+				var marker = new google.maps.Marker({
+					position: position,
+					map: map,
             //title: markers[i][0]
         });
+		} else {
+			alter('not working cuase' + status);
+		}
+		});
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
                 infoWindow.setContent(
