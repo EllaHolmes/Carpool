@@ -39,7 +39,7 @@ def new_user_page(request):
 
 
 def create_new_driver(request):
-	user_ = Driver()
+    user_ = Driver()
     user_.create(
         request.POST['first_name_text'],
         request.POST['last_name_text'],
@@ -56,7 +56,7 @@ def create_new_driver(request):
     return user_
 
 def create_new_rider(request):
-	user_ = Rider()
+    user_ = Rider()
     user_.create(
         request.POST['first_name_text'],
         request.POST['last_name_text'],
