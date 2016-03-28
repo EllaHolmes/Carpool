@@ -4,7 +4,7 @@ from carpool.models import Rider, Driver
 from datetime import date
 from geopy.geocoders import Nominatim
 
-debugging = True
+debugging = False
 
 # Create your views here.
 def home_page(request):
@@ -23,12 +23,15 @@ def new_user_page(request):
         #if (debugging):
             #print(Rider.get_suitable_riders(user_))
 
-        return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+        if(not rider_list_empty):
+            return render( request, 'index.html', {'user_first_name': user_.nameFirst,
                                                 'user_last_name': user_.nameLast,
                                                 'user_start_loc': user_.start,
                                                 'user_end_loc': user_.end,
                                                 'user_date': user_.date,
                                                 'list_of_riders': rider_list})
+        else:
+            return render(request, 'tempErrorPage.html')
 
 
     elif 'newRider' in request.POST:
