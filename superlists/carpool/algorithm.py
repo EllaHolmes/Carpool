@@ -1,4 +1,4 @@
-from bounding_box import BoundingBox, LatLng
+from carpool.bounding_box import BoundingBox, LatLng
 
 debugging = True
 
