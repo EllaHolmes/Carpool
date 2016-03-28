@@ -30,15 +30,19 @@
 	</div>
     <form method="POST" action ="/welcome/" class =".col-md-6">
       <div class="col-sm-6">
+		<p>Who are you and where are you going?</p>
 		<input name = "first_name_text" id="id_first_name" placeholder="First Name" /> 
-		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/> 
-		
-		
+		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/> <br>
 		<input name = "start_text" id="id_start" placeholder="Start Location"/> 
 		<input name = "end_text" id="id_end" placeholder="End Location"/><br><br>
-        </div>
+        
+		
+		
+		
+		</div>
                 <div class='input-group date' id='datetimepicker1'>
-                    <input type='text' class="form-control" placeholder = "Date" name="date_text" id="id_date"/>
+                    <p>When are you traveling?: </p>
+					<input type='text' class="form-control" placeholder = "Date" name="date_text" id="id_date"/>
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
@@ -63,7 +67,8 @@
 			</div>	
     <br><br>
       <!-- <a href = "/welcome/">Submit</a> -->
-      <button id="id_new_driver_btn"
+      <div id = "buttons">
+	  <button id="id_new_driver_btn"
             type="submit"
             name = "newDriver"
             class="btn btn-primary"
@@ -74,7 +79,15 @@
              class="btn btn-primary"
 			 formaction=""
             >New Rider</button>
+			
+		<style>
+		
+		#buttons{
+		float: center;
+		}
+		</style>
       {% csrf_token %}
+	  </div>
     </form>
 
 	</div>
