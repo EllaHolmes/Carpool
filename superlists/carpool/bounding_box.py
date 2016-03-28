@@ -1,5 +1,5 @@
 import math
-
+#from carpool.models import LatLng
 # Static variables
 debugging = False
 
@@ -19,10 +19,10 @@ bottom_right_tag = bottom_tag + join_char + right_tag
 
 # Classes
 class BoundingBox(object):
-	
+
 	if (debugging):
 		print ("Creating a bounding box object...")
-	
+
 	offset_scale = 0.1
 	x_offset = 0
 	y_offset = 0
@@ -32,7 +32,7 @@ class BoundingBox(object):
 
 
 	def set_offset (self, x_offset, y_offset):
-		
+
 		self.x_offset = x_offset
 		self.y_offset = y_offset
 
@@ -62,40 +62,41 @@ class BoundingBox(object):
 			print("Created " + str(self))
 
 	def set_start_pos(self, lat, lng):
+
 		self.start_pos = LatLng(lat, lng)
-		
+
 		if (debugging):
 			print("The start position is " + str(self.start_pos))
 
 	def set_end_pos(self, lat, lng):
 		self.end_pos = LatLng(lat, lng)
-		
+
 		if (debugging):
 			print("The end position is " + str(self.end_pos))
 
-		
+
 	# Sets the tags of the start and end position to indicate their positions
 	def set_tags(self):
 
 		self.start_pos.set_tag (
 			self.get_corner_tag(
-				self.start_pos, 
+				self.start_pos,
 				self.end_pos
 			)
 		)
 
-		self.end_pos.set_tag( 
+		self.end_pos.set_tag(
 			self.get_corner_tag(
-				self.end_pos, 
+				self.end_pos,
 				self.start_pos
 			)
 		)
-		
+
 	# Sets the position of the corners of the bounding box
 	def set_corners(self):
-		
+
 		self.top_left_corner = self.get_corner (
-			top_left_tag	
+			top_left_tag
 		)
 
 		self.top_right_corner = self.get_corner (
@@ -111,7 +112,7 @@ class BoundingBox(object):
 		)
 
 	def get_corner(self, tag, x_offset = None, y_offset = None, start_pos = None, end_pos = None):
-		
+
 		if (y_offset == None):
 			y_offset = self.y_offset
 
@@ -158,7 +159,7 @@ class BoundingBox(object):
 			self.throw_tag_error(self_lat_tag)
 
 		position = self.adjust_position_by_offset(position, x_offset, y_offset)
-		
+
 		return position
 
 	def get_top_left_corner (self):
@@ -166,9 +167,9 @@ class BoundingBox(object):
 
 	def get_top_right_corner (self):
 		return self.top_right_corner
-	
+
 	def get_bottom_left_corner (self):
-		return self.bottom_left_corner		
+		return self.bottom_left_corner
 
 	def get_bottom_right_corner (self):
 		return self.bottom_right_corner
@@ -206,9 +207,9 @@ class BoundingBox(object):
 			lat_tag = right_tag
 
 		return lng_tag + join_char + lat_tag
-		
+
 	def get_lat_tag (self, tag):
-		return self.get_tag_param(tag, 1)		
+		return self.get_tag_param(tag, 1)
 
 	def get_lng_tag (self, tag):
 		return self.get_tag_param(tag, 0)
@@ -223,108 +224,107 @@ class BoundingBox(object):
 		return self.get_corner_tag(this_point, compare_point)
 
 	def in_bounds (self, x_pos, y_pos):
-		bounds_check = (x_pos >= self.top_right_corner.lat and 
-			x_pos <= self.top_left_corner.lat and 
-			y_pos >= self.top_right_corner.lng and 
+		bounds_check = (x_pos >= self.top_right_corner.lat and
+			x_pos <= self.top_left_corner.lat and
+			y_pos >= self.top_right_corner.lng and
 			y_pos <= self.bottom_right_corner.lng)
 
 
 		if (debugging):
-			print ("The point " + 
-				str(x_pos) + ", " + str(y_pos) + 
-				" is in bounds " + 
+			print ("The point " +
+				str(x_pos) + ", " + str(y_pos) +
+				" is in bounds " +
 				str(bounds_check)
 			)
 
 		return bounds_check
 
 	def __str__ (self):
-		return ("Bounding Box Object. Corners: \n{\n" + 
+		return ("Bounding Box Object. Corners: \n{\n" +
 			"\t" + str(self.top_left_corner) + ",\n" +
 			"\t" + str(self.top_right_corner) + ",\n" +
 			"\t" + str(self.bottom_left_corner) + ",\n" +
 			"\t" + str(self.bottom_right_corner) + "\n}")
 
-	
-
 class LatLng(object):
-	
-	def __init__(self, lat, lng, tag = None):
-		self.lat = lat
-		self.lng = lng
-		self.tag = tag
+    def __init__ (self, lat, lng, tag = None):
+        self.lat = lat
+        self.lng = lng
+        self.tag = tag
 
-	# Can add a string that's a tag if need be
-	def set_tag(self, tag):
-		self.tag = tag
+    # Can add a string that's a tag if need be
+    def set_tag(self, tag):
+        self.tag = tag
 
-	def set_lat(self, lat):
-		self.lat = lat
+    def set_lat(self, lat):
+        self.lat = lat
 
-	def set_lng(self, lng):
-		self.lng = lng
+    def set_lng(self, lng):
+        self.lng = lng
 
-	def get_lat_tag (self):
-		return self.get_tag_param(1)		
+    def get_lat_tag (self):
+        return self.get_tag_param(1)
 
-	def get_lng_tag (self):
-		return self.get_tag_param(0)
+    def get_lng_tag (self):
+        return self.get_tag_param(0)
 
-	def get_tag_param (self, param_index):
-		return self.tag.split(join_char)[param_index]
+    def get_tag_param (self, param_index):
+        return self.tag.split(join_char)[param_index]
 
-	def translate (self, delta_lat, delta_lng):
-		self.lat += delta_lat
-		self.lng += delta_lng
+    def translate (self, delta_lat, delta_lng):
+        self.lat += delta_lat
+        self.lng += delta_lng
 
-		# Accounts for wrap around
-		self.lat = wrap_lat(self.lat)
-		self.lng = wrap_lng(self.lng)
+        # Accounts for wrap around
+        self.lat = LatLng.wrap_lat(self.lat)
+        self.lng = LatLng.wrap_lng(self.lng)
 
-	# Uses pythagorean theorem to determine distance to another pos
-	def distance (self, other_lat_lng):
-		return math.sqrt(
-			math.pow(self.lat - other_lat_lng.lat, 2) +
-			math.pow(self.lng - other_lat_lng.lng, 2)
-		)
+    # Uses pythagorean theorem to determine distance to another pos
+    def distance (self, other_lat_lng):
+        return math.sqrt(
+            math.pow(self.lat - other_lat_lng.lat, 2) +
+            math.pow(self.lng - other_lat_lng.lng, 2)
+        )
 
-	def __str__(self):
-		lat_lng_as_string = (
-			"Lat: " + 
-			str(self.lat) + 
-			", Lng: " + 
-			str(self.lng)
-		)
+    def __str__(self):
+        lat_lng_as_string = (
+            "Lat: " +
+            str(self.lat) +
+            ", Lng: " +
+            str(self.lng)
+        )
 
-		if (self.tag != None):
-			lat_lng_as_string += " Tag: " + self.tag
+        if (self.tag != None):
+            lat_lng_as_string += " Tag: " + self.tag
 
-		return "{" + lat_lng_as_string + "}"
+        return "{" + lat_lng_as_string + "}"
 
+    # LatLng Util Functions
+    @staticmethod
+    def wrap_lat (lat):
+        if (lat > 90):
+            return lat - 180
+        elif (lat < -90):
+            return lat + 180
+        else:
+            return lat
 
-# LatLng Util Functions
-def wrap_lat (lat):
-	if (lat > 90):
-		return lat - 180
-	elif (lat < -90):
-		return lat + 180
-	else:
-		return lat
+    @staticmethod
+    def wrap_lng (lng):
+        if (lng > 180):
+            return lng - 360
+        elif (lng < -180):
+            return lng + 360
+        else:
+            return lng
 
-def wrap_lng (lng):
-	if (lng > 180):
-		return lng - 360
-	elif (lng < -180):
-		return lng + 360
-	else:
-		return lng
 
 if (debugging):
 
 	bounding_box = BoundingBox()
-	
+
 	bounding_box.set_relative_offset_scale(0.1)
-	
+
 	start_lat = 89
 	start_lng = 179
 	end_lat = -7
@@ -337,7 +337,7 @@ if (debugging):
 	tag = bounding_box.test_corner_tag()
 	lat_tag = bounding_box.get_lat_tag(tag)
 	lng_tag = bounding_box.get_lng_tag(tag)
-	
+
 	bounding_box.in_bounds(1, 1)
 	bounding_box.in_bounds(10, 10)
 	bounding_box.in_bounds(-5, -2)

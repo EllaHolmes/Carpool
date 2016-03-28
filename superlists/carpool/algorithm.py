@@ -1,4 +1,5 @@
-from carpool.bounding_box import BoundingBox, LatLng
+from bounding_box import BoundingBox, LatLng
+
 
 debugging = True
 
@@ -40,29 +41,26 @@ class RouteAlgorithm(object):
 		else:
 			return True
 
-
-
-
 class Route(object):
-	def __init__ (self, start_pos, end_pos, date=None):
-		self.start_pos = start_pos
-		self.end_pos = end_pos
-		self.date = date
+    def __init__ (self, start_pos, end_pos, date=None):
+        self.start_pos = start_pos
+        self.end_pos = end_pos
+        self.date = date
 
-	def get_start(self):
-		return self.start_pos
+    def get_start(self):
+        return self.start_pos
 
-	def get_end(self):
-		return self.end_pos
+    def get_end(self):
+        return self.end_pos
 
-	def get_date(self):
-		return self.date
+    def get_date(self):
+        return self.date
 
-	def __str__ (self):
-		route_as_string = "Route: " + str(self.start_pos) + " to " + str(self.end_pos)
-		if (self.date != None):
-			 route_as_string += " on " + str(self.date)
-		return route_as_string
+    def __str__ (self):
+        route_as_string = "Route: " + str(self.start_pos) + " to " + str(self.end_pos)
+        if (self.date != None):
+             route_as_string += " on " + str(self.date)
+        return route_as_string
 
 # TODO: - Calculate Detour Time/Added Time to Pick up User
 
