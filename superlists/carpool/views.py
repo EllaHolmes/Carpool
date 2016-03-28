@@ -22,20 +22,25 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
+        rider_list_empty = rider_list.count() == 0
 
+		
         if (debugging):
             print(Rider.get_suitable_riders(user_))
-
-        return render( request, 'index.html', {'user_first_name': user_.nameFirst,
-                                                'user_last_name': user_.nameLast,
-                                                'user_start_loc': user_.start,
-                                                'user_end_loc': user_.end,
-                                                'user_date': user_.date,
-                                                'list_of_riders': rider_list})
+            return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+                                                   'user_last_name': user_.nameLast,
+                                                   'user_start_loc': user_.start,
+                                                   'user_end_loc': user_.end,
+                                                   'user_date': user_.date,
+                                                   'list_of_riders': rider_list})
+        if(rider_list_empty):
+            return render(request,'tempErrorPage.html')
+            
 
     elif 'newRider' in request.POST:
         user_ = create_new_rider(request)
-        # driver_list = find_drivers_for_a_rider(user_)
+        #We have not made the page to send in this instance therefore it just saves. it should not send to index
+		# driver_list = find_drivers_for_a_rider(user_)
         # return render( request, 'index.html', {'user_first_name': user_.nameFirst,
         #                                         'user_last_name': user_.nameLast,
         #                                         'user_start_loc': user_.start,
@@ -52,7 +57,7 @@ def create_new_driver(request):
     user_ = Driver()
     user_.create(
         request.POST['first_name_text'],
-        request.POST['last_name_text'],
+		request.POST['last_name_text'],
         request.POST['start_text'],
         request.POST['end_text'],
         request.POST['date_text']
@@ -98,7 +103,7 @@ def find_riders_for_a_driver(user):
     else:
         filtered_riders = Rider.objects.filter(date = user.date
 									).filter(start__iexact = user.start
-									).filter(end__iexact = user.end)[:5]
+									).filter(end__iexact = user.end)[:5]                           
         for item in filtered_riders:
             print (item.nameFirst + "Hello\n")
         return filtered_riders
