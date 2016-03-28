@@ -4,15 +4,10 @@ from carpool.models import Rider, Driver
 from datetime import date
 from geopy.geocoders import Nominatim
 
-debugging = False
+debugging = True
 
 # Create your views here.
 def home_page(request):
-    if (debugging):
-        geolocator = Nominatim()
-        location = geolocator.geocode("175 5th Avenue NYC")
-        print(location.address)
-
     if 'newRider' in request.POST:
         user_= create_new_rider(request)
         user_.save()
@@ -24,18 +19,17 @@ def new_user_page(request):
         rider_list = find_riders_for_a_driver( user_)
         rider_list_empty = rider_list.count() == 0
 
-		
-        if (debugging):
-            print(Rider.get_suitable_riders(user_))
-            return render( request, 'index.html', {'user_first_name': user_.nameFirst,
-                                                   'user_last_name': user_.nameLast,
-                                                   'user_start_loc': user_.start,
-                                                   'user_end_loc': user_.end,
-                                                   'user_date': user_.date,
-                                                   'list_of_riders': rider_list})
-        if(rider_list_empty):
-            return render(request,'tempErrorPage.html')
-            
+
+        #if (debugging):
+            #print(Rider.get_suitable_riders(user_))
+
+        return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+                                                'user_last_name': user_.nameLast,
+                                                'user_start_loc': user_.start,
+                                                'user_end_loc': user_.end,
+                                                'user_date': user_.date,
+                                                'list_of_riders': rider_list})
+
 
     elif 'newRider' in request.POST:
         user_ = create_new_rider(request)

@@ -17,7 +17,7 @@ PythonDatabaseObjectParser.prototype.parseObjectAsArray = function(objectAsText,
 };
 
 // Parses a single string into an array of strings: still in the SQL Lite database format
-PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectArrayAsText) {    
+PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectArrayAsText) {
     objectArrayAsText = objectArrayAsText.replace("]", "");
     objectArrayAsText = objectArrayAsText.replace("[", "");
     objectArrayAsText = objectArrayAsText.replace(/>,/g, ">_");
@@ -27,18 +27,18 @@ PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectA
 
 // Parses a single string in the SQL Lite database format into a matrix of strings (2D Array)
 PythonDatabaseObjectParser.prototype.parseObjectArrayAsStringMatrix = function(
-  objectArrayAsTextArray, 
+  objectArrayAsTextArray,
   objectHeaderAsString) {
 
   objectArrayAsTextArray = this.replaceEscapeCharacters(objectArrayAsTextArray);
 
   var allObjectsAsStringArrays = [];
-  
+
   var allObjectsAsStrings = this.parseStringAsStringArray(objectArrayAsTextArray);
 
   for (var i = 0; i < allObjectsAsStrings.length; i++) {
     allObjectsAsStringArrays.push(this.parseObjectAsArray(allObjectsAsStrings[i], objectHeaderAsString));
-  }    
+  }
 
   return allObjectsAsStringArrays;
 
@@ -53,13 +53,31 @@ PythonDatabaseObjectParser.prototype.replaceEscapeCharacters = function(objectsA
     return objectsAsString;
 }
 
+
+function Route (start, stop) {
+  this.start = start;
+  this.stop = stop;
+}
+
+Route.parseFromString = function (routeAsString) {
+  var parameters = routeAsString.split("to");
+  var startString = parameters[0];
+  var stopString = parameters[1];
+
+  var start = JSON.parse(startString);
+  var stop = JSON.parse(stopString);
+
+  return new Route (start, stop);
+}
+
 // Used to represent a user in JavaScript
-function User (lastName, firstName, start, end, date) {
+function User (lastName, firstName, start, end, date, route) {
   this.firstName = firstName;
   this.lastName = lastName;
   this.start = start;
   this.end = end;
   this.date = date;
+  this.route = route
 }
 
 // Static function: creates a user from a string array of length 5
@@ -70,7 +88,8 @@ User.parseFromStringArray = function (stringArray) {
         stringArray[1].trim(),
         stringArray[2].trim(),
         stringArray[3].trim(),
-        stringArray[4].trim()
+        stringArray[4].trim(),
+        Route.parseFromString(stringArray[5])
     );
 }
 
@@ -83,3 +102,5 @@ User.parseFromStringArrayMatrix = function (stringMatrix) {
   }
   return users;
 }
+console.log("Hi")
+console.log(Route.parseFromString("{\"Lat\": 47.2868352, \"Lng\": -120.2126138}to{\"Lat\": 41.8935085, \"Lng\": 12.4825526}"));
