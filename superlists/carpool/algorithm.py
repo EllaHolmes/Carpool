@@ -5,11 +5,11 @@ debugging = True
 # - Compare two Start Locations
 # - Compare two End Locations
 
-class RouteAlgorithm(object):	
+class RouteAlgorithm(object):
 	# Checks whether the driver and rider route are compatible
 	def routes_compatible (self, driver_route, rider_route):
 		bounding_box = BoundingBox()
-		
+
 		bounding_box.create(
 			driver_route.get_start().lat,
 			driver_route.get_start().lng,
@@ -20,7 +20,7 @@ class RouteAlgorithm(object):
 		# If either part of the route is not in bounds
 		if (not bounding_box.in_bounds(
 			rider_route.get_start().lat,
-			rider_route.get_start().lng) 
+			rider_route.get_start().lng)
 			or
 			not bounding_box.in_bounds(
 			rider_route.get_end().lat,
@@ -28,12 +28,12 @@ class RouteAlgorithm(object):
 			print ("Rider route is not in the bounding box")
 			return False
 		# If the start position of the rider is closer to the end position than the start position of the driver
-		elif (driver_route.get_start().distance(rider_route.get_start()) > 
+		elif (driver_route.get_start().distance(rider_route.get_start()) >
 			driver_route.get_start().distance(rider_route.get_end())):
 			print ("Rider route start position closer to driver end position")
 			return False
 		# If the end position of the rider is closer to the start position than the end position of the driver
-		elif (driver_route.get_end().distance(rider_route.get_end()) > 
+		elif (driver_route.get_end().distance(rider_route.get_end()) >
 			driver_route.get_end().distance(rider_route.get_start())):
 			print ("Rider route end position closer to driver start position")
 			return False
@@ -59,7 +59,6 @@ class Route(object):
 		return self.date
 
 	def __str__ (self):
-		
 		route_as_string = "Route: " + str(self.start_pos) + " to " + str(self.end_pos)
 		if (self.date != None):
 			 route_as_string += " on " + str(self.date)
@@ -72,7 +71,7 @@ class Route(object):
 if (debugging):
 	start_pos = LatLng(5, 5)
 	end_pos = LatLng(-5, -5)
-	
+
 	driver_route = Route(start_pos, end_pos)
 
 	start_pos = LatLng(3, 3)

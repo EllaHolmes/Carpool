@@ -2,11 +2,17 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from carpool.models import Rider, Driver
 from datetime import date
+from geopy.geocoders import Nominatim
 
 debugging = False
 
 # Create your views here.
 def home_page(request):
+    if (debugging):
+        geolocator = Nominatim()
+        location = geolocator.geocode("175 5th Avenue NYC")
+        print(location.address)
+
     if 'newRider' in request.POST:
         user_= create_new_rider(request)
         user_.save()
@@ -16,6 +22,10 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
+
+        if (debugging):
+            print(Rider.get_suitable_riders(user_))
+
         return render( request, 'index.html', {'user_first_name': user_.nameFirst,
                                                 'user_last_name': user_.nameLast,
                                                 'user_start_loc': user_.start,
