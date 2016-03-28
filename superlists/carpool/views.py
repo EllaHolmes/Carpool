@@ -2,11 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from carpool.models import Rider, Driver
 from datetime import date
-import json
 from geopy.geocoders import Nominatim
-from django.core.serializers.json import DjangoJSONEncoder
 
-debugging = True
+debugging = False
 
 # Create your views here.
 def home_page(request):
@@ -28,7 +26,6 @@ def new_user_page(request):
         if (debugging):
             print(Rider.get_suitable_riders(user_))
 
-        #rider_list_json = json.dumps(list(rider_list), cls=DjangoJSONEncoder)
         return render( request, 'index.html', {'user_first_name': user_.nameFirst,
                                                 'user_last_name': user_.nameLast,
                                                 'user_start_loc': user_.start,
@@ -52,9 +49,6 @@ def new_user_page(request):
 
 
 def create_new_driver(request):
-    print ('I can drive')
-
-
     user_ = Driver()
     user_.create(
         request.POST['first_name_text'],
@@ -72,11 +66,8 @@ def create_new_driver(request):
     return user_
 
 def create_new_rider(request):
-    print ('I am a new rider')
-
     user_ = Rider()
-
-    user_.create (
+    user_.create(
         request.POST['first_name_text'],
         request.POST['last_name_text'],
         request.POST['start_text'],
@@ -104,9 +95,10 @@ def find_drivers_for_a_rider(user):
 def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
-
     else:
-        filtered_riders = Rider.objects.filter(date = user.date)[:5]
+        filtered_riders = Rider.objects.filter(date = user.date
+									).filter(start__iexact = user.start
+									).filter(end__iexact = user.end)[:5]
         for item in filtered_riders:
-            print (item.nameFirst)
+            print (item.nameFirst + "Hello\n")
         return filtered_riders
