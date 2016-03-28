@@ -3,12 +3,18 @@ from django.http import HttpResponse
 from carpool.models import Rider, Driver
 from datetime import date
 import json
+from geopy.geocoders import Nominatim
 from django.core.serializers.json import DjangoJSONEncoder
 
 debugging = True
 
 # Create your views here.
 def home_page(request):
+    if (debugging):
+        geolocator = Nominatim()
+        location = geolocator.geocode("175 5th Avenue NYC")
+        print(location.address)
+
     if 'newRider' in request.POST:
         user_= create_new_rider(request)
         user_.save()
@@ -18,6 +24,9 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
+
+        if (debugging):
+            print(Rider.get_suitable_riders(user_))
 
         #rider_list_json = json.dumps(list(rider_list), cls=DjangoJSONEncoder)
         return render( request, 'index.html', {'user_first_name': user_.nameFirst,
@@ -63,7 +72,7 @@ def create_new_driver(request):
     return user_
 
 def create_new_rider(request):
-    print ('I am a new rider')    
+    print ('I am a new rider')
 
     user_ = Rider()
 
@@ -96,7 +105,7 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
 
-    else:   
+    else:
         filtered_riders = Rider.objects.filter(date = user.date)[:5]
         for item in filtered_riders:
             print (item.nameFirst)
