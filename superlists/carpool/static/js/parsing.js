@@ -17,7 +17,7 @@ PythonDatabaseObjectParser.prototype.parseObjectAsArray = function(objectAsText,
 };
 
 // Parses a single string into an array of strings: still in the SQL Lite database format
-PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectArrayAsText) {    
+PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectArrayAsText) {
     objectArrayAsText = objectArrayAsText.replace("]", "");
     objectArrayAsText = objectArrayAsText.replace("[", "");
     objectArrayAsText = objectArrayAsText.replace(/>,/g, ">_");
@@ -27,18 +27,18 @@ PythonDatabaseObjectParser.prototype.parseStringAsStringArray = function(objectA
 
 // Parses a single string in the SQL Lite database format into a matrix of strings (2D Array)
 PythonDatabaseObjectParser.prototype.parseObjectArrayAsStringMatrix = function(
-  objectArrayAsTextArray, 
+  objectArrayAsTextArray,
   objectHeaderAsString) {
 
   objectArrayAsTextArray = this.replaceEscapeCharacters(objectArrayAsTextArray);
 
   var allObjectsAsStringArrays = [];
-  
+
   var allObjectsAsStrings = this.parseStringAsStringArray(objectArrayAsTextArray);
 
   for (var i = 0; i < allObjectsAsStrings.length; i++) {
     allObjectsAsStringArrays.push(this.parseObjectAsArray(allObjectsAsStrings[i], objectHeaderAsString));
-  }    
+  }
 
   return allObjectsAsStringArrays;
 
