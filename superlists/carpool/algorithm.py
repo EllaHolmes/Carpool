@@ -7,39 +7,39 @@ debugging = True
 # - Compare two End Locations
 
 class RouteAlgorithm(object):
-	# Checks whether the driver and rider route are compatible
-	def routes_compatible (self, driver_route, rider_route):
-		bounding_box = BoundingBox()
+    # Checks whether the driver and rider route are compatible
+    def routes_compatible (self, driver_route, rider_route):
+        bounding_box = BoundingBox()
 
-		bounding_box.create(
-			driver_route.get_start().lat,
-			driver_route.get_start().lng,
-			driver_route.get_end().lat,
-			driver_route.get_end().lng
-		)
+        bounding_box.create(
+            driver_route.get_start().lat,
+            driver_route.get_start().lng,
+            driver_route.get_end().lat,
+            driver_route.get_end().lng
+        )
 
-		# If either part of the route is not in bounds
-		if (not bounding_box.in_bounds(
-			rider_route.get_start().lat,
-			rider_route.get_start().lng)
-			or
-			not bounding_box.in_bounds(
-			rider_route.get_end().lat,
-			rider_route.get_end().lng)):
-			print ("Rider route is not in the bounding box")
-			return False
-		# If the start position of the rider is closer to the end position than the start position of the driver
-		elif (driver_route.get_start().distance(rider_route.get_start()) >
-			driver_route.get_start().distance(rider_route.get_end())):
-			print ("Rider route start position closer to driver end position")
-			return False
-		# If the end position of the rider is closer to the start position than the end position of the driver
-		elif (driver_route.get_end().distance(rider_route.get_end()) >
-			driver_route.get_end().distance(rider_route.get_start())):
-			print ("Rider route end position closer to driver start position")
-			return False
-		else:
-			return True
+        # If either part of the route is not in bounds
+        if (not bounding_box.in_bounds(
+            rider_route.get_start().lat,
+            rider_route.get_start().lng)
+            or
+            not bounding_box.in_bounds(
+            rider_route.get_end().lat,
+            rider_route.get_end().lng)):
+            print ("Rider route is not in the bounding box")
+            return False
+        # If the start position of the rider is closer to the end position than the start position of the driver
+        elif (driver_route.get_start().distance(rider_route.get_start()) >
+            driver_route.get_start().distance(rider_route.get_end())):
+            print ("Rider route start position closer to driver end position")
+            return False
+        # If the end position of the rider is closer to the start position than the end position of the driver
+        elif (driver_route.get_end().distance(rider_route.get_end()) >
+            driver_route.get_end().distance(rider_route.get_start())):
+            print ("Rider route end position closer to driver start position")
+            return False
+        else:
+            return True
 
 class Route(object):
     def __init__ (self, start_pos, end_pos, date=None):
@@ -67,21 +67,21 @@ class Route(object):
 
 # Debugging test for class
 if (debugging):
-	start_pos = LatLng(5, 5)
-	end_pos = LatLng(-5, -5)
+    start_pos = LatLng(5, 5)
+    end_pos = LatLng(-5, -5)
 
-	driver_route = Route(start_pos, end_pos)
+    driver_route = Route(start_pos, end_pos)
 
-	start_pos = LatLng(3, 3)
-	end_pos = LatLng(-3, -3)
+    start_pos = LatLng(3, 3)
+    end_pos = LatLng(-3, -3)
 
-	rider_route = Route(start_pos, end_pos)
+    rider_route = Route(start_pos, end_pos)
 
-	algorithm = RouteAlgorithm()
+    algorithm = RouteAlgorithm()
 
-	print (
-		algorithm.routes_compatible(
-			driver_route,
-			rider_route
-		)
-	)
+    print (
+        algorithm.routes_compatible(
+            driver_route,
+            rider_route
+        )
+    )
