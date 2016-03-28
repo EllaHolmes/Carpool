@@ -84,6 +84,7 @@ class Driver(User):
 class Rider(User):
     user_type = models.CharField(max_length=10, default="Rider")
 
+    @staticmethod
     def get_suitable_riders (driver):
         # Initializes a new geolocator
         driver_route = driver.get_route()
