@@ -11,7 +11,7 @@ class User(models.Model):
     end = models.TextField(default = '')
     date = models.TextField(default = '')
 
-    def create ( first_name, last_name, start, end, date):
+    def create (self, first_name, last_name, start, end, date):
         self.nameFirst = first_name
         self.nameLast = last_name
         self.start = start
