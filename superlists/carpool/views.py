@@ -4,7 +4,7 @@ from carpool.models import Rider, Driver
 from datetime import date
 from geopy.geocoders import Nominatim
 
-debugging = False
+debugging = True
 
 # Create your views here.
 def home_page(request):
