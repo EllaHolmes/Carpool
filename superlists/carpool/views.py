@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from carpool.models import Rider, Driver
 from datetime import date
 import sys
+from geopy.geocoders import Nominatim
 
-debugging = False
+debugging = True
 
 # Create your views here.
 def home_page(request):
@@ -23,15 +24,26 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
-        return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+        rider_list_empty = rider_list.count() == 0
+
+
+        if (debugging):
+            print(Rider.get_suitable_riders(user_))
+
+        if(not rider_list_empty):
+            return render( request, 'index.html', {'user_first_name': user_.nameFirst,
                                                 'user_last_name': user_.nameLast,
                                                 'user_start_loc': user_.start,
                                                 'user_end_loc': user_.end,
                                                 'user_date': user_.date,
                                                 'list_of_riders': rider_list})
+        else:
+            return render(request, 'tempErrorPage.html')
+
 
     elif 'newRider' in request.POST:
         user_ = create_new_rider(request)
+        #We have not made the page to send in this instance therefore it just saves. it should not send to index
         # driver_list = find_drivers_for_a_rider(user_)
         # return render( request, 'index.html', {'user_first_name': user_.nameFirst,
         #                                         'user_last_name': user_.nameLast,
@@ -98,8 +110,8 @@ def find_riders_for_a_driver(user):
         return Rider.objects.all()
     else:
         filtered_riders = Rider.objects.filter(date = user.date
-									).filter(start__iexact = user.start
-									).filter(end__iexact = user.end)[:5]
+                                    ).filter(start__iexact = user.start
+                                    ).filter(end__iexact = user.end)[:5]
         for item in filtered_riders:
             print (item.nameFirst + "Hello\n")
         return filtered_riders
