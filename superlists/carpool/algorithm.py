@@ -1,4 +1,5 @@
 from carpool.bounding_box import BoundingBox, LatLng
+from carpool.models import Rider, Driver, Route
 
 
 debugging = True
@@ -41,26 +42,7 @@ class RouteAlgorithm(object):
         else:
             return True
 
-class Route(object):
-    def __init__ (self, start_pos, end_pos, date=None):
-        self.start_pos = start_pos
-        self.end_pos = end_pos
-        self.date = date
 
-    def get_start(self):
-        return self.start_pos
-
-    def get_end(self):
-        return self.end_pos
-
-    def get_date(self):
-        return self.date
-
-    def __str__ (self):
-        route_as_string = "Route: " + str(self.start_pos) + " to " + str(self.end_pos)
-        if (self.date != None):
-             route_as_string += " on " + str(self.date)
-        return route_as_string
 
 # TODO: - Calculate Detour Time/Added Time to Pick up User
 
@@ -70,12 +52,14 @@ if (debugging):
     start_pos = LatLng(5, 5)
     end_pos = LatLng(-5, -5)
 
-    driver_route = Route(start_pos, end_pos)
+    driver_route = Route()
+    driver_route.create(start_pos,end_pos)
 
     start_pos = LatLng(3, 3)
     end_pos = LatLng(-3, -3)
 
-    rider_route = Route(start_pos, end_pos)
+    rider_route = Route()
+    rider_route.create(start_pos, end_pos)
 
     algorithm = RouteAlgorithm()
 
@@ -85,3 +69,20 @@ if (debugging):
             rider_route
         )
     )
+    
+    @staticmethod
+def get_suitable_riders (driver):
+        # Initializes a new geolocator
+    driver_route = driver.get_route()
+    algorithm = RouteAlgorithm()
+
+    suitable_riders = []
+
+    for rider in Rider.objects.all():
+        rider_route = rider.get_route()
+        if (rider_route != None and algorithm.routes_compatible(
+            driver_route,
+            rider_route
+        )):
+            suitable_riders.append(rider)
+    return suitable_riders
