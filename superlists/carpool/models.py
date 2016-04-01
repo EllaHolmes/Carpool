@@ -95,13 +95,13 @@ class User(models.Model):
     def get_route (self):
         start_lat_lng = self.get_start_lat_lng()
         end_lat_lng = self.get_end_lat_lng()
-        
+
         if (start_lat_lng == None or end_lat_lng == None):
             print("Route is null")
             return None
         else:
             route = Route()
-            
+
             route.create (
                 start_lat_lng,
                 end_lat_lng

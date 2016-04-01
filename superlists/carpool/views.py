@@ -2,15 +2,22 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from carpool.models import Rider, Driver
 from datetime import date
+import sys
 from geopy.geocoders import Nominatim
 
-debugging = False
+debugging = True
 
 # Create your views here.
 def home_page(request):
     if 'newRider' in request.POST:
-        user_= create_new_rider(request)
-        user_.save()
+        try:
+            user_= create_new_rider(request)
+            user_.save()
+        except: # catch ​*all*​ exceptions
+            e = sys.exc_info()[0]
+            print( "Error: %s" % e )
+            error = "Please enter in all feilds"
+            return render(request, 'base.html', {'error':error})
     return render(request, 'base.html')
 
 def new_user_page(request):
@@ -69,13 +76,17 @@ def create_new_driver(request):
 
 def create_new_rider(request):
     user_ = Rider()
-    user_.create(
-        request.POST['first_name_text'],
-        request.POST['last_name_text'],
-        request.POST['start_text'],
-        request.POST['end_text'],
-        request.POST['date_text']
-    )
+    try:
+        user_.create(
+            request.POST['first_name_text'],
+            request.POST['last_name_text'],
+            request.POST['start_text'],
+            request.POST['end_text'],
+            request.POST['date_text']
+        )
+    except: # catch ​*all*​ exceptions
+        e = sys.exc_info()[0]
+        print( "****Error: " % e )
 
     #save the object
     user_.save()
