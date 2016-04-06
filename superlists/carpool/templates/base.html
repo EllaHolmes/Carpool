@@ -19,6 +19,8 @@
     <script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
 
+    <script src="/static/js/google-maps-integration.js"></script>
+
 
   </head>
   <body>
@@ -35,7 +37,10 @@
 		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/> <br>
 		<input name = "start_text" id="id_start" placeholder="Start Location"/>
 		<input name = "end_text" id="id_end" placeholder="End Location"/><br><br>
-
+    <input type = "label" value = "Start Geolocation:" readonly>
+    <input type = "label" value = "End Geolocation:" readonly><br>
+    <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
+    <input name = "end_lat_lng" id = "id_end_lat_lng" readonly>
 
 
 
@@ -99,4 +104,7 @@
   {% endif%}
 
   </body>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true"
+    async defer>
+  </script>
 </html>
