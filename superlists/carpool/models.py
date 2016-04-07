@@ -146,7 +146,7 @@ class LatLng(models.Model):
         return self.get_tag_param(0)
 
     def get_tag_param (self, param_index):
-        return self.tag.split(join_char)[param_index]
+        return self.tag.split(split_char)[param_index]
 
     def translate (self, delta_lat, delta_lng):
         self.lat += delta_lat

@@ -3,8 +3,9 @@ from django.http import HttpResponse
 from carpool.models import Rider, Driver
 from datetime import date
 from geopy.geocoders import Nominatim
+import carpool.algorithm
 
-debugging = True
+debugging = False
 
 # Create your views here.
 def home_page(request):
@@ -17,7 +18,7 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
-        rider_list_empty = rider_list.count() == 0
+        rider_list_empty = len(rider_list) == 0
 
 
         #if (debugging):
@@ -99,4 +100,5 @@ def find_riders_for_a_driver(user):
         return Rider.objects.all()
     else:
         filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]                           
-        return filtered_riders
+        algor_filtered_riders = carpool.algorithm.get_suitable_riders(user)
+        return algor_filtered_riders

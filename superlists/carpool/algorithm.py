@@ -1,8 +1,8 @@
-from carpool.bounding_box import BoundingBox, LatLng
-from carpool.models import Rider, Driver, Route
+from carpool.bounding_box import BoundingBox
+from carpool.models import Rider, Driver, Route, LatLng
 
 
-debugging = True
+debugging = False
 
 # - Compare two Start Locations
 # - Compare two End Locations
@@ -49,14 +49,18 @@ class RouteAlgorithm(object):
 
 # Debugging test for class
 if (debugging):
-    start_pos = LatLng(5, 5)
-    end_pos = LatLng(-5, -5)
+    start_pos = LatLng()
+    start_pos.create(5, 5)
+    end_pos = LatLng()
+    end_pos.create(-5, -5)
 
     driver_route = Route()
     driver_route.create(start_pos,end_pos)
 
-    start_pos = LatLng(3, 3)
-    end_pos = LatLng(-3, -3)
+    start_pos = LatLng()
+    start_pos.create(3, 3)
+    end_pos = LatLng()
+    end_pos.create(-3, -3)
 
     rider_route = Route()
     rider_route.create(start_pos, end_pos)
@@ -70,8 +74,8 @@ if (debugging):
         )
     )
     
-    @staticmethod
-def get_suitable_riders (driver):
+   # @staticmethod
+def get_suitable_riders(driver):
         # Initializes a new geolocator
     driver_route = driver.get_route()
     algorithm = RouteAlgorithm()
