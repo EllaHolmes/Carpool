@@ -99,6 +99,6 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
     else:
-        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]                           
-        algor_filtered_riders = carpool.algorithm.get_suitable_riders(user)
+        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]      This line won't work                      
+        algor_filtered_riders = carpool.algorithm.get_suitable_riders(user,filtered_riders)
         return algor_filtered_riders

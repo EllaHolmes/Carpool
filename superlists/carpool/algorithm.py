@@ -75,14 +75,14 @@ if (debugging):
     )
     
    # @staticmethod
-def get_suitable_riders(driver):
+def get_suitable_riders(driver, filtered_Riders):
         # Initializes a new geolocator
     driver_route = driver.get_route()
     algorithm = RouteAlgorithm()
 
     suitable_riders = []
 
-    for rider in Rider.objects.all():
+    for rider in filtered_Riders:
         rider_route = rider.get_route()
         if (rider_route != None and algorithm.routes_compatible(
             driver_route,
