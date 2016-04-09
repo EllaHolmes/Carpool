@@ -44,7 +44,6 @@ def new_user_page(request):
 
         elif 'newRider' in request.POST:
                 user_= create_new_rider(request)
-                user_.save()
                 return render(request, 'base.html')
             #We have not made the page to send in this instance therefore it just saves. it should not send to index
             # driver_list = find_drivers_for_a_rider(user_)
@@ -116,7 +115,7 @@ def create_new_rider(request):
         )
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
-        print( "****Error: " % e )
+        print( "****Error: %s" % e )
 
     #save the object
     user_.save()
