@@ -24,7 +24,7 @@ def home_page(request):
     return render(request, 'base.html')
 
 def new_user_page(request):
-   # try:
+   try:
         if 'newDriver' in request.POST:
             user_ = create_new_driver(request)
             rider_list = find_riders_for_a_driver( user_)
@@ -45,7 +45,6 @@ def new_user_page(request):
 
         elif 'newRider' in request.POST:
                 user_= create_new_rider(request)
-                user_.save()
                 return render(request, 'base.html')
             #We have not made the page to send in this instance therefore it just saves. it should not send to index
             # driver_list = find_drivers_for_a_rider(user_)
@@ -57,11 +56,11 @@ def new_user_page(request):
             #                                         ''})
         else:
             print ("error: are you a rider or a driver?")
- #   except: # catch ​*all*​ exceptions
-  #      e = sys.exc_info()[0]
-   #     print( "Error: %s" % e )
-    #    error = "Please enter in all feilds"
-     #   return render(request, 'base.html', {'error':error})
+   except: # catch ​*all*​ exceptions
+       e = sys.exc_info()[0]
+       print( "Error: %s" % e )
+       error = ( "Error: %s" % e )
+       return render(request, 'base.html', {'error':error})
 
 
 
@@ -121,6 +120,7 @@ def create_new_rider(request):
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
         print( "Error: %s" % e )
+        error = ( "Error: %s" % e )
         return render(request, 'base.html', {'error':error})
 
     # driver_ =find_driver()
