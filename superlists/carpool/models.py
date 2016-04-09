@@ -38,7 +38,7 @@ class User(models.Model):
     date = models.TextField(default = '')
     route = None
 
-    def create (self, first_name, last_name, start, end, date):
+    def create (self, first_name, last_name, start, end, date, start_geo_arr, end_geo_arr):
         self.nameFirst = first_name
         self.nameLast = last_name
         self.start = start
@@ -50,8 +50,25 @@ class User(models.Model):
             int(date_string[1])
         )
 
-        if (self.route == None):
-            self.route = self.get_route()
+        start_geo = LatLng()
+        end_geo = LatLng()
+
+        start_geo.create(
+            start_geo_arr[0],
+            start_geo_arr[1]
+        )
+
+        end_geo.create (
+            end_geo_arr[0],
+            end_geo_arr[1]
+        )
+
+        self.route = Route ()
+
+        self.route.create (
+            start_geo,
+            end_geo
+        )
 
         return self
 
@@ -68,7 +85,6 @@ class User(models.Model):
     def get_type (self):
         return self.user_type
 
-    #WARNING: Not functional until Isaiah figures out how to import geopy
     def get_lat_lng_from_address (self, address):
         geolocator = Nominatim()
 
@@ -93,8 +109,7 @@ class User(models.Model):
         return self.get_lat_lng_from_address(self.end)
 
     def get_route (self):
-        start_lat_lng = self.get_start_lat_lng()
-        end_lat_lng = self.get_end_lat_lng()
+        return self.route
 
         if (start_lat_lng == None or end_lat_lng == None):
             print("Route is null")

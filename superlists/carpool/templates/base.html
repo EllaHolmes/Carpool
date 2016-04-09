@@ -1,47 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Carpool</title>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Carpool</title>
 
-  <!-- Bootstrap and jQuery are in our static folder-->
-  <script src="/static/js/moment.min.js"></script>
-  <script src="/static/js/jquery.min.js"></script>
-  <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Bootstrap and jQuery are in our static folder-->
+    <script src="/static/js/moment.min.js"></script>
+    <script src="/static/js/jquery.min.js"></script>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 
-  <!-- Included both the datetime and the date version of these files so either can be used -->
-  <link href="/static/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet">
-  <link href="/static/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet">
-  <script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-  <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
+    <!-- Included both the datetime and the date version of these files so either can be used -->
+    <link href = "/static/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <link href = "/static/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
+
+    <script src="/static/js/google-maps-integration.js"></script>
 
 
-</head>
-
-<body>
-  <!-- All of your HTML will go between here.... -->
-  <div class="container">
-    <div class="jumbotron">
-      <h1 id="pageTitle" class="text-center">Carpool: <small>Find a Ride</small></h1>
-      <p id="tagLine" class="text-center">Better environment. Better society.</p>
-    </div>
-    <form method="POST" action="/welcome/" class=".col-md-6">
+  </head>
+  <body>
+    <!-- All of your HTML will go between here.... -->
+    <div class ="container">
+	<div class = "jumbotron">
+	<h1 id = "pageTitle" class = "text-center">Carpool: <small>Find a Ride</small></h1>
+	<p id ="tagLine" class= "text-center">Better environment. Better society.</p>
+	</div>
+    <form method="POST" action ="/welcome/" class =".col-md-6">
       <div class="col-sm-6">
-        <p>Who are you and where are you going?</p>
-        <input name="first_name_text" id="id_first_name" placeholder="First Name" />
-        <input name="last_name_text" id="id_last_name" placeholder="Last Name" />
-        <br>
-        <input name="start_text" id="id_start" placeholder="Start Location" />
-        <input name="end_text" id="id_end" placeholder="End Location" />
-        <br>
-        <br>
-
-
+		<p>Who are you and where are you going?</p>
+		<input name = "first_name_text" id="id_first_name" placeholder="First Name" />
+		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/> <br>
+		<input name = "start_text" id="id_start" placeholder="Start Location"/>
+		<input name = "end_text" id="id_end" placeholder="End Location"/><br><br>
+    <input type = "label" value = "Start Geolocation:" readonly>
+    <input type = "label" value = "End Geolocation:" readonly><br>
+    <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
+    <input name = "end_lat_lng" id = "id_end_lat_lng" readonly>
 
 
       </div>
@@ -94,6 +94,9 @@
   </div>
   {% endif%}
 
-</body>
 
+  </body>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true"
+    async defer>
+  </script>
 </html>
