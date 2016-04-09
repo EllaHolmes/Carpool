@@ -115,12 +115,14 @@ def create_new_rider(request):
             start_lat_lng_arr,
             end_lat_lng_arr
         )
+
+        #save the object
+        user_.save()
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
-        print( "****Error: " % e )
+        print( "Error: %s" % e )
+        return render(request, 'base.html', {'error':error})
 
-    #save the object
-    user_.save()
     # driver_ =find_driver()
     return user_
 
@@ -140,7 +142,7 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
     else:
-        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]      This line won't work                      
+        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]      This line won't work
         algor_filtered_riders = carpool.algorithm.get_suitable_riders(user,filtered_riders)
         return algor_filtered_riders
 
@@ -150,4 +152,3 @@ def find_riders_for_a_driver(user):
   #      for item in filtered_riders:
  #           print (item.nameFirst + "Hello\n")
 #        return filtered_riders
-
