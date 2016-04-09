@@ -6,8 +6,9 @@ from datetime import date
 import sys
 from carpool.parsing import parse_lat_lng_string
 from geopy.geocoders import Nominatim
+import carpool.algorithm
 
-debugging = True
+debugging = False
 
 # Create your views here.
 def home_page(request):
@@ -27,7 +28,7 @@ def new_user_page(request):
         if 'newDriver' in request.POST:
             user_ = create_new_driver(request)
             rider_list = find_riders_for_a_driver( user_)
-            rider_list_empty = rider_list.count() == 0
+            rider_list_empty = len(rider_list) == 0
 
             if (debugging):
                 print(Rider.get_suitable_riders(user_))
@@ -44,7 +45,6 @@ def new_user_page(request):
 
         elif 'newRider' in request.POST:
                 user_= create_new_rider(request)
-                user_.save()
                 return render(request, 'base.html')
             #We have not made the page to send in this instance therefore it just saves. it should not send to index
             # driver_list = find_drivers_for_a_rider(user_)
@@ -56,11 +56,13 @@ def new_user_page(request):
             #                                         ''})
         else:
             print ("error: are you a rider or a driver?")
+
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
-        print( "Error: %s" % e )
-        error = "Please enter in all feilds"
+        print("Error:%s" % e )
+        error = ("Error:%s" % e) #"Please enter in all feilds"
         return render(request, 'base.html', {'error':error})
+
 
 
 
@@ -99,12 +101,12 @@ def create_new_rider(request):
     try:
         start_lat_lng_arr = parsing.parse_lat_lng_string (
             request.POST['start_lat_lng']
-        )
+            )
 
         end_lat_lng_arr = parsing.parse_lat_lng_string (
             request.POST['end_lat_lng']
-        )
-
+            )
+    
         user_.create(
             request.POST['first_name_text'],
             request.POST['last_name_text'],
@@ -114,12 +116,15 @@ def create_new_rider(request):
             start_lat_lng_arr,
             end_lat_lng_arr
         )
+
+        #save the object
+        user_.save()
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
-        print( "****Error: " % e )
+        print( "Error: %s" % e )
+        error = ( "Error: %s" % e )
+        return render(request, 'base.html', {'error':error})
 
-    #save the object
-    user_.save()
     # driver_ =find_driver()
     return user_
 
@@ -139,9 +144,13 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
     else:
-        filtered_riders = Rider.objects.filter(date = user.date
-                                    ).filter(start__iexact = user.start
-                                    ).filter(end__iexact = user.end)[:5]
-        for item in filtered_riders:
-            print (item.nameFirst + "Hello\n")
-        return filtered_riders
+        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]      This line won't work
+        algor_filtered_riders = carpool.algorithm.get_suitable_riders(user,filtered_riders)
+        return algor_filtered_riders
+
+     #   filtered_riders = Rider.objects.filter(date = user.date
+    #                                ).filter(start__iexact = user.start
+   #                                 ).filter(end__iexact = user.end)[:5]
+  #      for item in filtered_riders:
+ #           print (item.nameFirst + "Hello\n")
+#        return filtered_riders

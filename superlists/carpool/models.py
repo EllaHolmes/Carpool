@@ -2,8 +2,6 @@ from __future__ import unicode_literals
 from django.db import models
 import datetime
 from geopy.geocoders import Nominatim
-from carpool.bounding_box import BoundingBox
-from carpool.algorithm import RouteAlgorithm
 import math
 split_char = "_"
 
@@ -136,22 +134,6 @@ class Driver(User):
 class Rider(User):
     user_type = models.CharField(max_length=10, default="Rider")
 
-    @staticmethod
-    def get_suitable_riders (driver):
-        # Initializes a new geolocator
-        driver_route = driver.get_route()
-        algorithm = RouteAlgorithm()
-
-        suitable_riders = []
-
-        for rider in Rider.objects.all():
-            rider_route = rider.get_route()
-            if (rider_route != None and algorithm.routes_compatible(
-                driver_route,
-                rider_route
-            )):
-                suitable_riders.append(rider)
-        return suitable_riders
 
 class LatLng(models.Model):
     lat = models.IntegerField()
@@ -179,7 +161,7 @@ class LatLng(models.Model):
         return self.get_tag_param(0)
 
     def get_tag_param (self, param_index):
-        return self.tag.split(join_char)[param_index]
+        return self.tag.split(split_char)[param_index]
 
     def translate (self, delta_lat, delta_lng):
         self.lat += delta_lat
