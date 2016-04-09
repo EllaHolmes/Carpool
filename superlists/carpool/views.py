@@ -69,11 +69,11 @@ def new_user_page(request):
 def create_new_driver(request):
     user_ = Driver()
 
-    start_lat_lng_arr = parsing.parse_lat_lng_string (
+    start_lat_lng_arr = parse_lat_lng_string (
         request.POST['start_lat_lng']
     )
 
-    end_lat_lng_arr = parsing.parse_lat_lng_string (
+    end_lat_lng_arr = parse_lat_lng_string (
         request.POST['end_lat_lng']
     )
 
