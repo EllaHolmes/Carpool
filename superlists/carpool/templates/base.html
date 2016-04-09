@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,13 +13,15 @@
     <script src="/static/js/jquery.min.js"></script>
     <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script src="/static/bootstrap/js/bootstrap.min.js"></script>
-    
+
     <!-- Included both the datetime and the date version of these files so either can be used -->
     <link href = "/static/bootstrap/css/bootstrap-datetimepicker.css" rel="stylesheet">
     <link href = "/static/bootstrap/css/bootstrap-datepicker.css" rel="stylesheet">
     <script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
-    
+
+    <script src="/static/js/google-maps-integration.js"></script>
+
 
   </head>
   <body>
@@ -31,66 +34,71 @@
     <form method="POST" action ="/welcome/" class =".col-md-6">
       <div class="col-sm-6">
 		<p>Who are you and where are you going?</p>
-		<input name = "first_name_text" id="id_first_name" placeholder="First Name" /> 
+		<input name = "first_name_text" id="id_first_name" placeholder="First Name" />
 		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/> <br>
-		<input name = "start_text" id="id_start" placeholder="Start Location"/> 
+		<input name = "start_text" id="id_start" placeholder="Start Location"/>
 		<input name = "end_text" id="id_end" placeholder="End Location"/><br><br>
-        
-		
-		
-		
-		</div>
-                <div class='input-group date' id='datetimepicker1'>
-                    <p>When are you traveling?: </p>
-					<input type='text' class="form-control" placeholder = "Date" name="date_text" id="id_date"/>
-                    <span class="input-group-addon">
+    <input type = "label" value = "Start Geolocation:" readonly>
+    <input type = "label" value = "End Geolocation:" readonly><br>
+    <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
+    <input name = "end_lat_lng" id = "id_end_lat_lng" readonly>
+
+
+      </div>
+      <div class='input-group date' id='datetimepicker1'>
+        <p>When are you traveling?: </p>
+        <input type='text' class="form-control" placeholder="Date" name="date_text" id="id_date" />
+        <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+        </span>
 
-					<script type="text/javascript">
-						$(function () {
-						$('#datetimepicker1').datepicker("getDate");
-						});
-					</script>
-					
-					<style>
-          
-					#datetimepicker1 {
-					width: 25%;
-					<!-- float: left; -->
-					<!-- margin-right: 30em; -->
-					}
-					</style>
-				
+        <script type="text/javascript">
+          $(function() {
+            $('#datetimepicker1').datepicker("getDate");
+          });
+        </script>
 
-				
-			</div>	
-    <br><br>
+        <style>
+          #datetimepicker1 {
+            width: 25%;
+            <!-- float: left;
+            --> <!-- margin-right: 30em;
+            -->
+          }
+        </style>
+
+
+
+      </div>
+      <br>
+      <br>
       <!-- <a href = "/welcome/">Submit</a> -->
-      <div id = "buttons">
-	  <button id="id_new_driver_btn"
-            type="submit"
-            name = "newDriver"
-            class="btn btn-primary"
-            >New Driver</button>
-     <button id="id_new_rider_btn"
-             type="submit"
-             name = "newRider"
-             class="btn btn-primary"
-			 formaction = ""
-            >New Rider</button>
-			
-		<style>
-		
-		#buttons{
-		float: center;
-		}
-		</style>
-      {% csrf_token %}
-	  </div>
+
+      <div id="buttons">
+        <button id="id_new_driver_btn" type="submit" name="newDriver" class="btn btn-primary">New Driver</button>
+        <button id="id_new_rider_btn" type="submit" name="newRider" class="btn btn-primary">New Rider</button>
+
+        <style>
+          #buttons {
+            float: center;
+          }
+        </style>
+        {% csrf_token %}
+      </div>
+
     </form>
 
-	</div>
-  
+  </div>
+  {% if error %}
+  <div class="alert alert-warning fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Warning!</strong> {{ error }}
+  </div>
+  {% endif%}
+
+
   </body>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true"
+    async defer>
+  </script>
 </html>
