@@ -24,11 +24,11 @@ def home_page(request):
     return render(request, 'base.html')
 
 def new_user_page(request):
-   # try:
+    try:
         if 'newDriver' in request.POST:
             user_ = create_new_driver(request)
             rider_list = find_riders_for_a_driver( user_)
-            rider_list_empty = rider_list.count() == 0
+            rider_list_empty = len(rider_list) == 0
 
             if (debugging):
                 print(Rider.get_suitable_riders(user_))
@@ -57,11 +57,11 @@ def new_user_page(request):
             #                                         ''})
         else:
             print ("error: are you a rider or a driver?")
- #   except: # catch ​*all*​ exceptions
-  #      e = sys.exc_info()[0]
-   #     print( "Error: %s" % e )
-    #    error = "Please enter in all feilds"
-     #   return render(request, 'base.html', {'error':error})
+    except: # catch ​*all*​ exceptions
+        e = sys.exc_info()[0]
+        print("Error:%s" % e )
+        error = "Error:%s" % e #"Please enter in all feilds"
+        return render(request, 'base.html', {'error':error})
 
 
 
@@ -100,12 +100,12 @@ def create_new_rider(request):
     try:
         start_lat_lng_arr = parsing.parse_lat_lng_string (
             request.POST['start_lat_lng']
-        )
+            )
 
         end_lat_lng_arr = parsing.parse_lat_lng_string (
             request.POST['end_lat_lng']
-        )
-
+            )
+    
         user_.create(
             request.POST['first_name_text'],
             request.POST['last_name_text'],
@@ -117,7 +117,7 @@ def create_new_rider(request):
         )
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
-        print( "****Error: " % e )
+        print( "Error:%s" % e )
 
     #save the object
     user_.save()
