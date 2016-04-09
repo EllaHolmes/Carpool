@@ -59,7 +59,7 @@ def new_user_page(request):
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
         print( "Error: %s" % e )
-        error = "Please enter in all feilds"
+        error = ("Error: %s\nPlease enter in all feilds" % e)
         return render(request, 'base.html', {'error':error})
 
 
