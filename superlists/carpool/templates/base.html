@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -43,65 +44,56 @@
     <input name = "end_lat_lng" id = "id_end_lat_lng" readonly>
 
 
-
-		</div>
-                <div class='input-group date' id='datetimepicker1'>
-                    <p>When are you traveling?: </p>
-					<input type='text' class="form-control" placeholder = "Date" name="date_text" id="id_date"/>
-                    <span class="input-group-addon">
+      </div>
+      <div class='input-group date' id='datetimepicker1'>
+        <p>When are you traveling?: </p>
+        <input type='text' class="form-control" placeholder="Date" name="date_text" id="id_date" />
+        <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
+        </span>
 
-					<script type="text/javascript">
-						$(function () {
-						$('#datetimepicker1').datepicker("getDate");
-						});
-					</script>
+        <script type="text/javascript">
+          $(function() {
+            $('#datetimepicker1').datepicker("getDate");
+          });
+        </script>
 
-					<style>
+        <style>
+          #datetimepicker1 {
+            width: 25%;
+            <!-- float: left;
+            --> <!-- margin-right: 30em;
+            -->
+          }
+        </style>
 
-					#datetimepicker1 {
-					width: 25%;
-					<!-- float: left; -->
-					<!-- margin-right: 30em; -->
-					}
-					</style>
 
 
-
-			</div>
-    <br><br>
+      </div>
+      <br>
+      <br>
       <!-- <a href = "/welcome/">Submit</a> -->
-      <div id = "buttons">
-	  <button id="id_new_driver_btn"
-            type="submit"
-            name = "newDriver"
-            class="btn btn-primary"
-            >New Driver</button>
-     <button id="id_new_rider_btn"
-             type="submit"
-             name = "newRider"
-             class="btn btn-primary"
-			 formaction=""
-            >New Rider</button>
+      <div id="buttons">
+        <button id="id_new_driver_btn" type="submit" name="newDriver" class="btn btn-primary">New Driver</button>
+        <button id="id_new_rider_btn" type="submit" name="newRider" class="btn btn-primary">New Rider</button>
 
-		<style>
-
-		#buttons{
-		float: center;
-		}
-		</style>
-      {% csrf_token %}
-	  </div>
+        <style>
+          #buttons {
+            float: center;
+          }
+        </style>
+        {% csrf_token %}
+      </div>
     </form>
 
-	</div>
+  </div>
   {% if error %}
-        <div class="alert alert-warning fade in">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Warning!</strong> {{ error }}
-        </div>
+  <div class="alert alert-warning fade in">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Warning!</strong> {{ error }}
+  </div>
   {% endif%}
+
 
   </body>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true"
