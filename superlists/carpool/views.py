@@ -45,24 +45,12 @@ def new_user_page(request):
         elif 'newRider' in request.POST:
                 user_= create_new_rider(request)
                 return render(request, 'base.html')
-            #We have not made the page to send in this instance therefore it just saves. it should not send to index
-            # driver_list = find_drivers_for_a_rider(user_)
-            # return render( request, 'index.html', {'user_first_name': user_.nameFirst,
-            #                                         'user_last_name': user_.nameLast,
-            #                                         'user_start_loc': user_.start,
-            #                                         'user_end_loc': user_.end,
-            #                                         'user_date': user_.date,
-            #                                         ''})
-        else:
-            print ("error: are you a rider or a driver?")
+
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
         print( "Error: %s" % e )
         error = ("Error: %s\nPlease enter in all feilds" % e)
         return render(request, 'base.html', {'error':error})
-
-
-
 
 
 def create_new_driver(request):
@@ -95,27 +83,23 @@ def create_new_driver(request):
 
 def create_new_rider(request):
     user_ = Rider()
-    try:
-        start_lat_lng_arr = parsing.parse_lat_lng_string (
-            request.POST['start_lat_lng']
-        )
+    start_lat_lng_arr = parsing.parse_lat_lng_string (
+        request.POST['start_lat_lng']
+    )
 
-        end_lat_lng_arr = parsing.parse_lat_lng_string (
-            request.POST['end_lat_lng']
-        )
+    end_lat_lng_arr = parsing.parse_lat_lng_string (
+        request.POST['end_lat_lng']
+    )
 
-        user_.create(
-            request.POST['first_name_text'],
-            request.POST['last_name_text'],
-            request.POST['start_text'],
-            request.POST['end_text'],
-            request.POST['date_text'],
-            start_lat_lng_arr,
-            end_lat_lng_arr
-        )
-    except: # catch ​*all*​ exceptions
-        e = sys.exc_info()[0]
-        print( "****Error: %s" % e )
+    user_.create(
+        request.POST['first_name_text'],
+        request.POST['last_name_text'],
+        request.POST['start_text'],
+        request.POST['end_text'],
+        request.POST['date_text'],
+        start_lat_lng_arr,
+        end_lat_lng_arr
+    )
 
     #save the object
     user_.save()
