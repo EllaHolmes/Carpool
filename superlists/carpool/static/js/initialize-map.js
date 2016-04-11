@@ -1,63 +1,8 @@
+var debugging = false;
 
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Directions service</title>
-    
-    <!-- The classes for parsing Python Django data in to JS Data -->
-    <script src="/static/js/parsing.js"></script>
-    
-
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 75%;
-		    width: 75%;
-      }
-    
-
-    </style>
-
-
-
-  </head>
-  <body>
-    <div>{{rider_list}}</div>
-    <div id="map"></div>
-
-	<table>
-          <td>{{ user_first_name }}</td>
-          <td>{{ user_last_name }}</td>
-          <td id = "startLoc">{{ user_start_loc }}</td>
-          <td id = "endLoc">{{ user_end_loc }}</td>
-          <td>{{ user_date }}</td>
-    </table>
-    
-    <!-- A hidden div to store all the rider info -->
-    <style>
-      #riders {
-        display: none;
-      }
-    </style>
-
-    <div id = "riders">
-      {{ list_of_riders }}
-    </div>
-    
-    <!-- Here is where we make the map and plot stuff on it-->
-    <script src="/static/js/initialize-map.js"></script>\
-    
-    <script>
-
-      // Initializes a new parser
-    /*  parser = new PythonDatabaseObjectParser();
+        console.log("hi world")
+   // Initializes a new parser
+      parser = new PythonDatabaseObjectParser();
 
       // Pulls the SQL Lite string output from the HTML element it's injected into and converts it into a 2D Array of strings
       var allRiders = parser.parseObjectArrayAsStringMatrix(document.getElementById("riders").innerHTML, "Rider");
@@ -80,12 +25,9 @@ function initMap() {
   var bounds = new google.maps.LatLngBounds();
   
   directionsDisplay.setMap(map);
-  calculateAndDisplayRoute(directionsService, directionsDisplay); 
+  calculateAndDisplayRoute(directionsService, directionsDisplay);
 
-  //allRiders[i].route.start.lat
- // .lng 
-  //places riders on the map and labels them 
-  for( i = 0; i < allRiders.length; i++ ) { 
+for( i = 0; i < allRiders.length; i++ ) { 
         
 		var position = new google.maps.LatLng(allRiders[i].route.start);  
         bounds.extend(position); 
@@ -131,14 +73,4 @@ var markers = [ //NOTE: Delete this after transitions to user data
 
 
 var riders = document.getElementById("riders");
-console.log(riders) */
-
-
-
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true&callback=initMap"
-        async defer></script>
-
-
-  </body>
-</html>
+console.log(riders)
