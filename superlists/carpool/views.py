@@ -37,14 +37,8 @@ def new_user_page(request):
 
     elif 'newRider' in request.POST:
         user_ = create_new_rider(request)
-        #We have not made the page to send in this instance therefore it just saves. it should not send to index
-        # driver_list = find_drivers_for_a_rider(user_)
-        # return render( request, 'index.html', {'user_first_name': user_.nameFirst,
-        #                                         'user_last_name': user_.nameLast,
-        #                                         'user_start_loc': user_.start,
-        #                                         'user_end_loc': user_.end,
-        #                                         'user_date': user_.date,
-        #                                         ''})
+        
+        return render(request, 'base.html')
     else:
         print ("error: are you a rider or a driver?")
 
