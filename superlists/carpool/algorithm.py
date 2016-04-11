@@ -73,6 +73,7 @@ if (debugging):
             rider_route
         )
     )
+
     
    # @staticmethod
 def get_suitable_riders(driver, filtered_Riders):
@@ -90,3 +91,4 @@ def get_suitable_riders(driver, filtered_Riders):
         )):
             suitable_riders.append(rider)
     return suitable_riders
+

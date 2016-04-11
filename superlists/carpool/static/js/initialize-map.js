@@ -1,3 +1,4 @@
+
 var debugging = false;
 
         console.log("hi world")
@@ -13,6 +14,7 @@ var debugging = false;
       // Debugs out the users
       console.log(allRiders);
 
+
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
@@ -23,6 +25,7 @@ function initMap() {
   var geocoder = new google.maps.Geocoder();
   var infoWindow = new google.maps.InfoWindow(), marker, i;
   var bounds = new google.maps.LatLngBounds();
+
   
   directionsDisplay.setMap(map);
   calculateAndDisplayRoute(directionsService, directionsDisplay);
@@ -33,8 +36,8 @@ for( i = 0; i < allRiders.length; i++ ) {
         bounds.extend(position); 
 		var marker = new google.maps.Marker({
 		position: position, 
-		map: map,
-         
+		map: map,  
+
         });
 		google.maps.event.addListener(marker, 'click', (function(marker, i) {
             return function() {
@@ -48,8 +51,7 @@ for( i = 0; i < allRiders.length; i++ ) {
         })(marker, i));
         // Automatically center the map fitting all markers on the screen
         map.fitBounds(bounds);}}
-  
-  
+
 function calculateAndDisplayRoute(directionsService, directionsDisplay) {
 
   directionsService.route({
@@ -73,4 +75,9 @@ var markers = [ //NOTE: Delete this after transitions to user data
 
 
 var riders = document.getElementById("riders");
-console.log(riders)
+
+
+if (debugging) {
+  console.log(riders);
+}
+

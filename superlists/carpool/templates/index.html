@@ -6,26 +6,13 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Directions service</title>
-    
+
     <!-- The classes for parsing Python Django data in to JS Data -->
     <script src="/static/js/parsing.js"></script>
     
 
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 75%;
-		    width: 75%;
-      }
-    
-
-    </style>
-
-
+    <!-- The custom stylesheet for this page saved in statics -->
+    <link href="/static/css/driver-map.css" rel="stylesheet">
 
   </head>
   <body>
@@ -39,7 +26,7 @@
           <td id = "endLoc">{{ user_end_loc }}</td>
           <td>{{ user_date }}</td>
     </table>
-    
+
     <!-- A hidden div to store all the rider info -->
     <style>
       #riders {
@@ -136,9 +123,8 @@ console.log(riders) */
 
 
     </script>
+    
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true&callback=initMap"
         async defer></script>
-
-
   </body>
 </html>
