@@ -39,9 +39,6 @@ def new_user_page(request):
                                                     'user_end_loc': user_.end,
                                                     'user_date': user_.date,
                                                     'list_of_riders': rider_list})
-            # else:
-            #     return render(request, 'tempErrorPage.html')
-
         elif 'newRider' in request.POST:
                 user_= create_new_rider(request)
                 return render(request, 'base.html')

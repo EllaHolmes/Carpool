@@ -22,72 +22,77 @@
 
     <script src="/static/js/google-maps-integration.js"></script>
 
+    <style>
+      #buttons {
+        float: center;
+      }
+      #datetimepicker1 {
+        width: 75%;
+        <!-- float: left;
+        --> <!-- margin-right: 30em;
+        -->
+      }
+      #data-info {
+        margin: auto;
+        width: 60%;
+        border: 3px;
+        padding: 10px;
+      }
+    </style>
+
 
   </head>
-  <body>
+  <body bgcolor="#E6E6FA">
     <!-- All of your HTML will go between here.... -->
     <div class ="container">
-	<div class = "jumbotron">
-	<h1 id = "pageTitle" class = "text-center">Carpool: <small>Find a Ride</small></h1>
-	<p id ="tagLine" class= "text-center">Better environment. Better society.</p>
-	</div>
-    <form method="POST" action ="/welcome/" class =".col-md-6">
-      <div class="col-sm-6">
-		<p>Who are you and where are you going?</p>
-		<input name = "first_name_text" id="id_first_name" placeholder="First Name" />
-		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/> <br>
-		<input name = "start_text" id="id_start" placeholder="Start Location"/>
-		<input name = "end_text" id="id_end" placeholder="End Location"/><br><br>
-    <input type = "label" value = "Start Geolocation:" readonly>
-    <input type = "label" value = "End Geolocation:" readonly><br>
-    <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
-    <input name = "end_lat_lng" id = "id_end_lat_lng" readonly>
+    	<div class = "jumbotron">
+      	<h1 id = "pageTitle" class = "text-center">Carpool: <small>Find a Ride</small></h1>
+      	<p id ="tagLine" class= "text-center">Better environment. Better society.</p>
+    	</div>
 
+      <div id = "data-info">
+        <form method="POST" action ="/welcome/" >
+          <div >
+        		<p>Who are you?</p>
+        		<input name = "first_name_text" id="id_first_name" placeholder="First Name" />
+        		<input name = "last_name_text" id="id_last_name" placeholder="Last Name"/>
+            <br>
+            <br>
+            <p>Where are you going?</p>
+        		<input name = "start_text" id="id_start" placeholder="Start Location"/>
+        		<input name = "end_text" id="id_end" placeholder="End Location"/>
+            <!-- <input type = "label" value = "Start Geolocation:" readonly>
+            <input type = "label" value = "End Geolocation:" readonly><br>
+            <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
+            <input name = "end_lat_lng" id = "id_end_lat_lng" readonly> -->
+            <br>
+            <br>
+            <div class='input-group date' id='datetimepicker1'>
+              <p>When are you traveling?</p>
+              <input type='text' class="form-control" placeholder="Date" name="date_text" id="id_date" />
+              <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-calendar"></span>
+              </span>
 
+              <script type="text/javascript">
+                $(function() {
+                  $('#datetimepicker1').datepicker("getDate");
+                });
+              </script>
+            </div>
+            <br>
+            <br>
+            <div id="buttons">
+              <button id="id_new_driver_btn" type="submit" name="newDriver" class="btn btn-primary">New Driver</button>
+              <button id="id_new_rider_btn" type="submit" name="newRider" class="btn btn-primary">New Rider</button>
+              {% csrf_token %}
+            </div>
+          </div>
+        </form>
       </div>
-      <div class='input-group date' id='datetimepicker1'>
-        <p>When are you traveling?: </p>
-        <input type='text' class="form-control" placeholder="Date" name="date_text" id="id_date" />
-        <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-
-        <script type="text/javascript">
-          $(function() {
-            $('#datetimepicker1').datepicker("getDate");
-          });
-        </script>
-
-        <style>
-          #datetimepicker1 {
-            width: 25%;
-            <!-- float: left;
-            --> <!-- margin-right: 30em;
-            -->
-          }
-        </style>
-
-
-
-      </div>
-      <br>
-      <br>
-      <!-- <a href = "/welcome/">Submit</a> -->
-      <div id="buttons">
-        <button id="id_new_driver_btn" type="submit" name="newDriver" class="btn btn-primary">New Driver</button>
-        <button id="id_new_rider_btn" type="submit" name="newRider" class="btn btn-primary">New Rider</button>
-
-        <style>
-          #buttons {
-            float: center;
-          }
-        </style>
-        {% csrf_token %}
-      </div>
-    </form>
-
   </div>
   {% if error %}
+  <br>
   <div class="alert alert-warning fade in">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>Warning!</strong> {{ error }}
