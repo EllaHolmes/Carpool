@@ -100,8 +100,13 @@ class User(models.Model):
     end = models.TextField(default = '')
     date = models.TextField(default = '')
     route_string = models.TextField(default = '')
-    route = None
-    
+    route = models.OneToOneField(
+        Route,
+        on_delete=models.CASCADE,
+        default = None,
+        null = True
+    )
+
     def create (self, first_name, last_name, start, end, date, start_geo_arr, end_geo_arr):
         self.nameFirst = first_name
         self.nameLast = last_name
