@@ -21,7 +21,7 @@
     <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
 
     <script src="/static/js/google-maps-integration.js"></script>
-
+    <link href = "/static/css/home-page.css" rel = "stylesheet">  
     <style>
       #buttons {
         float: center;
@@ -61,10 +61,12 @@
             <p>Where are you going?</p>
         		<input name = "start_text" id="id_start" placeholder="Start Location"/>
         		<input name = "end_text" id="id_end" placeholder="End Location"/>
-            <!-- <input type = "label" value = "Start Geolocation:" readonly>
-            <input type = "label" value = "End Geolocation:" readonly><br>
-            <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
-            <input name = "end_lat_lng" id = "id_end_lat_lng" readonly> -->
+            <div class = "hidden">
+              <input type = "label" value = "Start Geolocation:" readonly>
+              <input type = "label" value = "End Geolocation:" readonly><br>
+              <input name = "start_lat_lng" id = "id_start_lat_lng" readonly>
+              <input name = "end_lat_lng" id = "id_end_lat_lng" readonly>
+            </div>
             <br>
             <br>
             <div class='input-group date' id='datetimepicker1'>

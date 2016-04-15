@@ -7,9 +7,96 @@ from carpool.algorithm import RouteAlgorithm
 import math
 split_char = "_"
 
+class LatLng(models.Model):
+    lat = models.DecimalField(max_digits=5, decimal_places=2)
+    lng = models.DecimalField(max_digits=5, decimal_places=2)
 
+    def create(self, lat, lng, tag = None):
+        self.lat = lat
+        self.lng = lng
+        self.tag = tag
+
+    # Can add a string that's a tag if need be
+    def set_tag(self, tag):
+        self.tag = tag
+
+    def set_lat(self, lat):
+        self.lat = lat
+
+    def set_lng(self, lng):
+        self.lng = lng
+
+    def get_lat_tag (self):
+        return self.get_tag_param(1)
+
+    def get_lng_tag (self):
+        return self.get_tag_param(0)
+
+    def get_tag_param (self, param_index):
+        return self.tag.split(join_char)[param_index]
+
+    def translate (self, delta_lat, delta_lng):
+        self.lat += delta_lat
+        self.lng += delta_lng
+
+        # Accounts for wrap around
+        self.lat = LatLng.wrap_lat(self.lat)
+        self.lng = LatLng.wrap_lng(self.lng)
+
+    # Uses pythagorean theorem to determine distance to another pos
+    def distance (self, other_lat_lng):
+        return math.sqrt(
+            math.pow(self.lat - other_lat_lng.lat, 2) +
+            math.pow(self.lng - other_lat_lng.lng, 2)
+        )
+
+    def __str__(self):
+        lat_lng_as_string = (
+            "\"lat\": " +
+            str(self.lat) +
+            ", \"lng\": " +
+            str(self.lng)
+        )
+
+        if (self.tag != None):
+            lat_lng_as_string += " Tag: " + self.tag
+
+        return "{" + lat_lng_as_string + "}"
+
+    # LatLng Util Functions
+    @staticmethod
+    def wrap_lat (lat):
+        if (lat > 90):
+            return lat - 180
+        elif (lat < -90):
+            return lat + 180
+        else:
+            return lat
+
+    @staticmethod
+    def wrap_lng (lng):
+        if (lng > 180):
+            return lng - 360
+        elif (lng < -180):
+            return lng + 360
+        else:
+            return lng
 
 class Route(models.Model):
+    start_pos = models.OneToOneField (
+        LatLng,
+        on_delete=models.CASCADE,
+        related_name = "start_pos",
+        default = None
+    )
+
+    end_pos = models.OneToOneField (
+        LatLng,
+        on_delete=models.CASCADE,
+        related_name = "end_pos",
+        default = None
+    )
+
     def create (self, start_pos, end_pos, date=None):
         self.start_pos = start_pos
         self.end_pos = end_pos
@@ -36,7 +123,13 @@ class User(models.Model):
     start = models.TextField(default = '')
     end = models.TextField(default = '')
     date = models.TextField(default = '')
-    route = None
+    route = models.OneToOneField (
+        Route,
+        on_delete=models.CASCADE,
+        default = None,
+        null=True,
+        blank=True
+    )
 
     def create (self, first_name, last_name, start, end, date, start_geo_arr, end_geo_arr):
         self.nameFirst = first_name
@@ -51,17 +144,24 @@ class User(models.Model):
         )
 
         start_geo = LatLng()
-        end_geo = LatLng()
 
         start_geo.create(
             start_geo_arr[0],
             start_geo_arr[1]
         )
 
+        # Makes sure this saves to the database
+        start_geo.save()
+
+        end_geo = LatLng()
+
         end_geo.create (
             end_geo_arr[0],
             end_geo_arr[1]
         )
+
+        # Makes sure this saves to the database
+        end_geo.save()
 
         self.route = Route ()
 
@@ -70,6 +170,11 @@ class User(models.Model):
             end_geo
         )
 
+        # Makes sure this saves to the database
+        self.route.save()
+
+        print(self.route)
+        
         return self
 
     def __str__ (self):
@@ -152,78 +257,3 @@ class Rider(User):
             )):
                 suitable_riders.append(rider)
         return suitable_riders
-
-class LatLng(models.Model):
-    lat = models.IntegerField()
-    lng = models.IntegerField()
-
-    def create(self, lat, lng, tag = None):
-        self.lat = lat
-        self.lng = lng
-        self.tag = tag
-
-    # Can add a string that's a tag if need be
-    def set_tag(self, tag):
-        self.tag = tag
-
-    def set_lat(self, lat):
-        self.lat = lat
-
-    def set_lng(self, lng):
-        self.lng = lng
-
-    def get_lat_tag (self):
-        return self.get_tag_param(1)
-
-    def get_lng_tag (self):
-        return self.get_tag_param(0)
-
-    def get_tag_param (self, param_index):
-        return self.tag.split(join_char)[param_index]
-
-    def translate (self, delta_lat, delta_lng):
-        self.lat += delta_lat
-        self.lng += delta_lng
-
-        # Accounts for wrap around
-        self.lat = LatLng.wrap_lat(self.lat)
-        self.lng = LatLng.wrap_lng(self.lng)
-
-    # Uses pythagorean theorem to determine distance to another pos
-    def distance (self, other_lat_lng):
-        return math.sqrt(
-            math.pow(self.lat - other_lat_lng.lat, 2) +
-            math.pow(self.lng - other_lat_lng.lng, 2)
-        )
-
-    def __str__(self):
-        lat_lng_as_string = (
-            "\"lat\": " +
-            str(self.lat) +
-            ", \"lng\": " +
-            str(self.lng)
-        )
-
-        if (self.tag != None):
-            lat_lng_as_string += " Tag: " + self.tag
-
-        return "{" + lat_lng_as_string + "}"
-
-    # LatLng Util Functions
-    @staticmethod
-    def wrap_lat (lat):
-        if (lat > 90):
-            return lat - 180
-        elif (lat < -90):
-            return lat + 180
-        else:
-            return lat
-
-    @staticmethod
-    def wrap_lng (lng):
-        if (lng > 180):
-            return lng - 360
-        elif (lng < -180):
-            return lng + 360
-        else:
-            return lng

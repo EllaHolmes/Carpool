@@ -38,7 +38,7 @@ def new_user_page(request):
                                                     'user_start_loc': user_.start,
                                                     'user_end_loc': user_.end,
                                                     'user_date': user_.date,
-                                                    'list_of_riders': rider_list})
+                                                    'list_of_riders': rider_list})                
         elif 'newRider' in request.POST:
                 user_= create_new_rider(request)
                 return render(request, 'base.html')
@@ -80,11 +80,11 @@ def create_new_driver(request):
 
 def create_new_rider(request):
     user_ = Rider()
-    start_lat_lng_arr = parsing.parse_lat_lng_string (
+    start_lat_lng_arr = parse_lat_lng_string (
         request.POST['start_lat_lng']
     )
 
-    end_lat_lng_arr = parsing.parse_lat_lng_string (
+    end_lat_lng_arr = parse_lat_lng_string (
         request.POST['end_lat_lng']
     )
 
