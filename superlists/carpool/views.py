@@ -10,8 +10,14 @@ import carpool.algorithm
 
 debugging = False
 
+
+temp_rider = "Foo"
+
 # Create your views here.
 def home_page(request):
+    global temp_rider
+    print(temp_rider)
+
     # if 'newRider' in request.POST:
     #     try:
     #         user_= create_new_rider(request)
@@ -24,6 +30,9 @@ def home_page(request):
     return render(request, 'base.html')
 
 def new_user_page(request):
+    global temp_rider
+    print(temp_rider)
+    print(Rider.objects.all())
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
@@ -45,7 +54,11 @@ def new_user_page(request):
 
 
     elif 'newRider' in request.POST:
-        user_ = create_new_rider(request)
+        global temp_rider
+
+        temp_rider = create_new_rider(request)
+
+        print("We are creating a rider")
 
         return render(request, 'base.html')
     else:

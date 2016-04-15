@@ -65,8 +65,6 @@ class User(models.Model):
             end_geo
         )
 
-        self.save()
-
         return self
 
     def __str__ (self):
@@ -96,8 +94,8 @@ class Rider(User):
 
 
 class LatLng(models.Model):
-    lat = models.IntegerField()
-    lng = models.IntegerField()
+    lat = models.DecimalField(decimal_places = 2, max_digits = 5, )
+    lng = models.DecimalField(decimal_places = 2, max_digits = 5, )
 
     def create(self, lat, lng, tag = None):
         self.lat = lat
