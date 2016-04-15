@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 import datetime
-from geopy.geocoders import Nominatim
 import math
 split_char = "_"
 
@@ -24,8 +23,6 @@ class Route(models.Model):
 
     def __str__ (self):
         return str(self.start_pos) + "to" + str(self.end_pos)
-
-# TODO: - Calculate Detour Time/Added Time to Pick up User
 
 
 class User(models.Model):
@@ -68,12 +65,11 @@ class User(models.Model):
             end_geo
         )
 
+        self.save()
+
         return self
 
     def __str__ (self):
-        if (self.route == None):
-            self.route = self.get_route()
-
         return (self.nameLast + split_char +
             self.nameFirst + split_char +
             self.start +split_char +
@@ -83,44 +79,8 @@ class User(models.Model):
     def get_type (self):
         return self.user_type
 
-    def get_lat_lng_from_address (self, address):
-        geolocator = Nominatim()
-
-        location = geolocator.geocode(address)
-        if (location == None):
-            print ("Error: " + address + " is not valid")
-            return None
-
-        lat_lng = LatLng ()
-
-        lat_lng.create (
-            location.latitude,
-            location.longitude
-        )
-
-        return lat_lng
-
-    def get_start_lat_lng (self):
-        return self.get_lat_lng_from_address(self.start)
-
-    def get_end_lat_lng (self):
-        return self.get_lat_lng_from_address(self.end)
-
     def get_route (self):
         return self.route
-
-        if (start_lat_lng == None or end_lat_lng == None):
-            print("Route is null")
-            return None
-        else:
-            route = Route()
-
-            route.create (
-                start_lat_lng,
-                end_lat_lng
-            )
-
-            return route
 
     class Meta:
         abstract = True

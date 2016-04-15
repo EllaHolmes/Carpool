@@ -44,9 +44,6 @@ class RouteAlgorithm(object):
 
 
 
-# TODO: - Calculate Detour Time/Added Time to Pick up User
-
-
 # Debugging test for class
 if (debugging):
     start_pos = LatLng()
@@ -74,7 +71,7 @@ if (debugging):
         )
     )
 
-    
+
    # @staticmethod
 def get_suitable_riders(driver, filtered_Riders):
         # Initializes a new geolocator
@@ -91,4 +88,3 @@ def get_suitable_riders(driver, filtered_Riders):
         )):
             suitable_riders.append(rider)
     return suitable_riders
-

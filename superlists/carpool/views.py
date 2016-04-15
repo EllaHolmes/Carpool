@@ -46,7 +46,7 @@ def new_user_page(request):
 
     elif 'newRider' in request.POST:
         user_ = create_new_rider(request)
-        
+
         return render(request, 'base.html')
     else:
         print ("error: are you a rider or a driver?")
@@ -89,7 +89,7 @@ def create_new_rider(request):
         start_lat_lng_arr = parse_lat_lng_string (
             request.POST['start_lat_lng']
             )
-        print(request.POST['start_lat_lng'])
+
         end_lat_lng_arr = parse_lat_lng_string (
             request.POST['end_lat_lng']
         )
@@ -102,6 +102,7 @@ def create_new_rider(request):
             request.POST['date_text'],
             start_lat_lng_arr,
             end_lat_lng_arr)
+
     except: # catch ​*all*​ exceptions
         e = sys.exc_info()[0]
         print( "'Error:{0}'".format(e))
@@ -127,7 +128,6 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
     else:
-        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]                     
+        filtered_riders = Rider.objects.filter(date = user.date) #.filter(end__iexact = user.end)[:5]
         algor_filtered_riders = carpool.algorithm.get_suitable_riders(user,filtered_riders)
         return algor_filtered_riders
-
