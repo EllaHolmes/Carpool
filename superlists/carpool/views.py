@@ -7,7 +7,7 @@ import sys
 from carpool.parsing import parse_lat_lng_string
 from geopy.geocoders import Nominatim
 
-debugging = True
+debugging = False
 
 # Create your views here.
 def home_page(request):
@@ -27,13 +27,16 @@ def new_user_page(request):
     if 'newDriver' in request.POST:
         user_ = create_new_driver(request)
         rider_list = find_riders_for_a_driver( user_)
-        rider_list_empty = rider_list.count() == 0
+        # rider_list_empty = rider_list.count() == 0
 
         if (debugging):
             print(Rider.get_suitable_riders(user_))
 
-        if(not rider_list_empty):
-            return render( request, 'index.html', {'user_first_name': user_.nameFirst,
+        for item in rider_list:
+            print (item.nameFirst)
+
+        # if(not rider_list_empty):
+        return render( request, 'index.html', {'user_first_name': user_.nameFirst,
                                                 'user_last_name': user_.nameLast,
                                                 'user_start_loc': user_.start,
                                                 'user_end_loc': user_.end,
@@ -119,9 +122,10 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
     else:
+        # print("Inside riders for a driver")
         filtered_riders = Rider.objects.filter(date = user.date
                                     ).filter(start__iexact = user.start
                                     ).filter(end__iexact = user.end)[:5]
-        for item in filtered_riders:
-            print (item.nameFirst + "Hello\n")
+        # for item in filtered_riders:
+        #     print (item.nameFirst)
         return filtered_riders
