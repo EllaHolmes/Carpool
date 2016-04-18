@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 import datetime
-from geopy.geocoders import Nominatim
 from carpool.bounding_box import BoundingBox
 from carpool.algorithm import RouteAlgorithm
 import math
