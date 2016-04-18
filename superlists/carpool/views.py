@@ -119,9 +119,7 @@ def find_riders_for_a_driver(user):
     if (debugging):
         return Rider.objects.all()
     else:
-        filtered_riders = Rider.objects.filter(date = user.date
-                                    ).filter(start__iexact = user.start
-                                    ).filter(end__iexact = user.end)[:5]
+        filtered_riders = Rider.objects.filter(date = user.date)
         for item in filtered_riders:
             print (item.nameFirst + "Hello\n")
         return filtered_riders
