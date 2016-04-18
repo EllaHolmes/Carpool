@@ -5,9 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Directions service</title>
-    <!-- The classes for parsing Python Django data in to JS Data -->
-    <script src="/static/js/parsing.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true&callback=initMap" async defer></script>
+
     <!-- The custom stylesheet for this page saved in statics -->
     <link href="/static/css/driver-map.css" rel="stylesheet">
   </head>
@@ -19,7 +17,10 @@
   </style>
 
   <body>
-    <div>{{rider_list}}</div>
+    <div id = "riders">
+      {{list_of_riders}}
+    </div>
+
     <div id="map"></div>
   	<table>
       <h1>{{ user_first_name }}</h1>
@@ -28,7 +29,6 @@
       <td id = "endLoc">{{ user_end_loc }}</td>
       <td>{{ user_date }}</td>
     </table>
-      {{ list_of_riders }}
       <div>
         {% block table %}
           <table>
@@ -41,6 +41,9 @@
           </table>
         {% endblock %}
       </div>
+    <!-- The classes for parsing Python Django data in to JS Data -->
+    <script src="/static/js/parsing.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBZZtPU9QvqJq4de_uGdvZmBA-srtgDQjQ&signed_in=true&callback=initMap" async defer></script>
     <script src = "/static/js/initialize-map.js"></script>
   </body>
 </html>

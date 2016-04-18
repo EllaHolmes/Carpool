@@ -7,7 +7,7 @@ import sys
 from carpool.parsing import parse_lat_lng_string
 from geopy.geocoders import Nominatim
 
-debugging = True
+debugging = False
 
 # Create your views here.
 def home_page(request):
