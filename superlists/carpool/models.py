@@ -14,26 +14,12 @@ class LatLng(models.Model):
     def create(self, lat, lng, tag = None):
         self.lat = lat
         self.lng = lng
-        self.tag = tag
-
-    # Can add a string that's a tag if need be
-    def set_tag(self, tag):
-        self.tag = tag
 
     def set_lat(self, lat):
         self.lat = lat
 
     def set_lng(self, lng):
         self.lng = lng
-
-    def get_lat_tag (self):
-        return self.get_tag_param(1)
-
-    def get_lng_tag (self):
-        return self.get_tag_param(0)
-
-    def get_tag_param (self, param_index):
-        return self.tag.split(join_char)[param_index]
 
     def translate (self, delta_lat, delta_lng):
         self.lat += delta_lat
@@ -57,10 +43,6 @@ class LatLng(models.Model):
             ", \"lng\": " +
             str(self.lng)
         )
-
-        if (self.tag != None):
-            lat_lng_as_string += " Tag: " + self.tag
-
         return "{" + lat_lng_as_string + "}"
 
     # LatLng Util Functions
@@ -100,7 +82,6 @@ class Route(models.Model):
     def create (self, start_pos, end_pos, date=None):
         self.start_pos = start_pos
         self.end_pos = end_pos
-        self.date = date
 
     def get_start(self):
         return self.start_pos
@@ -108,13 +89,8 @@ class Route(models.Model):
     def get_end(self):
         return self.end_pos
 
-    def get_date(self):
-        return self.date
-
     def __str__ (self):
         return str(self.start_pos) + "to" + str(self.end_pos)
-
-# TODO: - Calculate Detour Time/Added Time to Pick up User
 
 
 class User(models.Model):
@@ -123,12 +99,12 @@ class User(models.Model):
     start = models.TextField(default = '')
     end = models.TextField(default = '')
     date = models.TextField(default = '')
-    route = models.OneToOneField (
+    route_string = models.TextField(default = '')
+    route = models.OneToOneField(
         Route,
         on_delete=models.CASCADE,
         default = None,
-        null=True,
-        blank=True
+        null = True
     )
 
     def create (self, first_name, last_name, start, end, date, start_geo_arr, end_geo_arr):
@@ -173,8 +149,8 @@ class User(models.Model):
         # Makes sure this saves to the database
         self.route.save()
 
-        print(self.route)
-        
+        self.route_string = str(self.route)
+
         return self
 
     def __str__ (self):
@@ -185,7 +161,7 @@ class User(models.Model):
             self.nameFirst + split_char +
             self.start +split_char +
             self.end + split_char +
-             str(self.date) + split_char + str(self.route))
+             str(self.date) + split_char + str(self.route_string))
 
     def get_type (self):
         return self.user_type
@@ -236,7 +212,6 @@ class User(models.Model):
 # Create your models here.
 class Driver(User):
     user_type = models.CharField(max_length=10, default="Driver")
-
 
 class Rider(User):
     user_type = models.CharField(max_length=10, default="Rider")
