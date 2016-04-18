@@ -124,9 +124,5 @@ def find_riders_for_a_driver(user):
         return Rider.objects.all()
     else:
         # print("Inside riders for a driver")
-        filtered_riders = Rider.objects.filter(date = user.date
-                                    ).filter(start__iexact = user.start
-                                    ).filter(end__iexact = user.end)[:5]
-        # for item in filtered_riders:
-        #     print (item.nameFirst)
+        filtered_riders = Rider.objects.filter(date = user.date)
         return filtered_riders

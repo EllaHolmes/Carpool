@@ -29,13 +29,12 @@ function initMap() {
   calculateAndDisplayRoute(directionsService, directionsDisplay);
 
 
-  //places riders on the map and labels them NOTE: currently using dummy coordinates in California (also )
-  for( i = 0; i < markers.length; i++ ) { ///Note: Change this to allRiders.length after transition
-
-		var position = new google.maps.LatLng(markers[i][0][0], markers[i][0][1]); //Note: delete this line after transition
-        bounds.extend(position); //Note: fill in coordinate from current rider here
+  //places riders on the map and labels them 
+  for( i = 0; i < allRiders.length; i++ ) { 
+		var position = new google.maps.LatLng(allRiders[i].route.start); 
+        bounds.extend(position); 
 		var marker = new google.maps.Marker({
-		position: position, //Note: fill in coordinate from current rider here
+		position: position, 
 		map: map,
 
         });
@@ -43,7 +42,7 @@ function initMap() {
             return function() {
                 infoWindow.setContent(
 								'<div class="info_content">' +
-								'<h3>' + allRiders[i].firstName + '</h3>' +  //Because this line is here, make sure you have at least two data points in riders!
+								'<h3>' + allRiders[i].firstName + '</h3>' +  
 								'<p>'+ allRiders[i].end +'</p>' +
 								'</div>');
                 infoWindow.open(map, marker);
@@ -73,6 +72,3 @@ var markers = [ //NOTE: Delete this after transitions to user data
 		[[37.666,-122.1965],[37.49,-122.20]]
         ];
 
-
-
-var riders = document.getElementById("riders");
