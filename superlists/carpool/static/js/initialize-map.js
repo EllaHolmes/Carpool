@@ -1,4 +1,4 @@
-var debugging = true;
+var debugging = false;
 
 // Initializes a new parser
 parser = new PythonDatabaseObjectParser();
@@ -76,7 +76,3 @@ var markers = [ //NOTE: Delete this after transitions to user data
 
 
 var riders = document.getElementById("riders");
-
-if (debugging) {
-  console.log(riders);
-}
