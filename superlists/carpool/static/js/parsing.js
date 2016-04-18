@@ -1,3 +1,4 @@
+var debugging = false;
 var splitChar = "_";
 
 // A class used to parse objects from a SQL Lite Database in the Python DjangoFramework
@@ -30,6 +31,7 @@ PythonDatabaseObjectParser.prototype.parseObjectArrayAsStringMatrix = function(
   objectArrayAsTextArray,
   objectHeaderAsString) {
 
+  console.log(objectArrayAsTextArray)
   objectArrayAsTextArray = this.replaceEscapeCharacters(objectArrayAsTextArray);
 
   var allObjectsAsStringArrays = [];
@@ -102,5 +104,7 @@ User.parseFromStringArrayMatrix = function (stringMatrix) {
   }
   return users;
 }
-console.log("Hi")
-console.log(Route.parseFromString("{\"Lat\": 47.2868352, \"Lng\": -120.2126138}to{\"Lat\": 41.8935085, \"Lng\": 12.4825526}"));
+
+if (debugging) {
+  console.log(Route.parseFromString("{\"Lat\": 47.2868352, \"Lng\": -120.2126138}to{\"Lat\": 41.8935085, \"Lng\": 12.4825526}"));
+}
