@@ -1,33 +1,44 @@
 var START_POS = null;
 var END_POS = null;
 
-function parseToLatLng (address, callback) {
+function parseToLatLng (address, latLngCallback, addressCallback) {
   geocoder = new google.maps.Geocoder();
   geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
-        callback({
+        latLngCallback({
           "lat" : results[0].geometry.location.lat(),
           "lng" : results[0].geometry.location.lng()
         });
+
+        addressCallback(results[0].formatted_address);
 
         console.log(getRoute());
       }
   });
 }
 
+function init () {
+    initInputListeners();
+    checkForInitialValues();
+}
 function initInputListeners () {
   $('#id_start').bind('focusout', function() {
     var address = $(this).val() // get the current value of the input field.
-    parseToLatLng(address, setStart);
+    parseToLatLng(address, setStart, setStaticStart);
 
   });
+
 
   $('#id_end').bind('focusout', function() {
     var address = $(this).val() // get the current value of the input field.
-    parseToLatLng(address, setEnd);
+    parseToLatLng(address, setEnd, setStaticEnd);
   });
 }
 
+function checkForInitialValues () {
+  parseToLatLng($("#id_start").val(), setStart, setStaticStart);
+  parseToLatLng($("#id_end").val(), setEnd, setStaticEnd);
+}
 function setStart (latlng) {
   START_POS = latlng;
   $("#id_start_lat_lng").val(latLngToString(latlng));
@@ -51,4 +62,4 @@ function getRoute () {
   };
 }
 
-window.onload = initInputListeners;
+window.onload = init;

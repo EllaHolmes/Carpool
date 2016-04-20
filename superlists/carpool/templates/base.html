@@ -20,8 +20,9 @@
     <script src="/static/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/bootstrap/js/bootstrap-datepicker.min.js"></script>
 
+    <script src="/static/js/popups.js"></script>
     <script src="/static/js/google-maps-integration.js"></script>
-    <link href = "/static/css/home-page.css" rel = "stylesheet">  
+    <link href = "/static/css/home-page.css" rel = "stylesheet">
     <style>
       #buttons {
         float: center;
@@ -51,7 +52,7 @@
     	</div>
 
       <div id = "data-info">
-        <form method="POST" action ="/welcome/" >
+        <form method="POST" action ="/welcome/" onsubmit="return showConfirmPrompt();">
           <div >
         		<p>Who are you?</p>
         		<input name = "first_name_text" id="id_first_name" placeholder="First Name" />
